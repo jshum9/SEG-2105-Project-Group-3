@@ -95,6 +95,7 @@
                 android:hint="Card Number"/>
 
             <EditText
+                android:maxLength="5"
                 android:inputType="text"
                 android:id="@+id/expDate"
                 android:layout_width="wrap_content"
@@ -102,6 +103,7 @@
                 android:hint="Expiration Date"/>
 
             <EditText
+                android:maxLength="4"
                 android:inputType="text"
                 android:id="@+id/cvv"
                 android:layout_width="wrap_content"

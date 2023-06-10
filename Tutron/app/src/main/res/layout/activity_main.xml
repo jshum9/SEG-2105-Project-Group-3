@@ -37,7 +37,6 @@
                     android:textStyle="bold"/>
 
                 <EditText
-                    android:maxLength="20"
                     android:inputType="text"
                     android:id="@+id/userEmail"
                     android:layout_width="match_parent"
