@@ -35,12 +35,12 @@
                 android:layout_gravity="center_horizontal">
 
                 <Button
-                    android:id="@+id/tutor"
+                    android:id="@+id/tutorSelectBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Tutor"/>
                 <Button
-                    android:id="@+id/student"
+                    android:id="@+id/studentSelectBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Student"/>
