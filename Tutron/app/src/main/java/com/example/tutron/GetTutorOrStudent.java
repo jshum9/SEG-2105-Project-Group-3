@@ -9,6 +9,8 @@ import android.widget.Button;
 
 public class GetTutorOrStudent extends AppCompatActivity {
     Button backBtn;
+    Button tutorBtn;
+    Button studentBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,26 @@ public class GetTutorOrStudent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent backIntent = new Intent(GetTutorOrStudent.this, MainActivity.class);
+                startActivity(backIntent);
+                finish();
+            }
+        });
+
+        tutorBtn = findViewById(R.id.tutorSelectBtn);
+        tutorBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent backIntent = new Intent(GetTutorOrStudent.this, Student.class);
+                startActivity(backIntent);
+                finish();
+            }
+        });
+
+        studentBtn = findViewById(R.id.studentSelectBtn);
+        studentBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent backIntent = new Intent(GetTutorOrStudent.this, Tutor.class);
                 startActivity(backIntent);
                 finish();
             }
