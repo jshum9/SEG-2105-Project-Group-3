@@ -51,16 +51,20 @@ public class Tutor extends AppCompatActivity {
                 String passwordTemp = password.getText().toString().trim();
                 String languageTemp = language.getText().toString().trim();
                 String descriptionTemp = language.getText().toString().trim();
+                Boolean dataSaved = false;
 
                 if (!TextUtils.isEmpty(userNameTemp) && !TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp)
                         && !TextUtils.isEmpty(educationTemp) && !TextUtils.isEmpty(emailTemp) && !TextUtils.isEmpty(passwordTemp)
                         && !TextUtils.isEmpty(languageTemp) && !TextUtils.isEmpty(descriptionTemp)) {
+                    dataSaved = true;
+                } else {
+                    Toast.makeText(Tutor.this, "Failed. All fields must be filled in.", Toast.LENGTH_SHORT).show();
+                }
+                if(dataSaved){
                     Toast.makeText(Tutor.this, "Successful!", Toast.LENGTH_SHORT).show();
                     Intent register = new Intent(Tutor.this, MainActivity.class);
                     startActivity(register);
                     finish();
-                } else {
-                    Toast.makeText(Tutor.this, "Failed. All fields must be filled in.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

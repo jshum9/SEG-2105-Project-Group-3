@@ -31,7 +31,7 @@ public class GetTutorOrStudent extends AppCompatActivity {
         tutorBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent backIntent = new Intent(GetTutorOrStudent.this, Student.class);
+                Intent backIntent = new Intent(GetTutorOrStudent.this, Tutor.class);
                 startActivity(backIntent);
                 finish();
             }
@@ -41,7 +41,7 @@ public class GetTutorOrStudent extends AppCompatActivity {
         studentBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent backIntent = new Intent(GetTutorOrStudent.this, Tutor.class);
+                Intent backIntent = new Intent(GetTutorOrStudent.this, Student.class);
                 startActivity(backIntent);
                 finish();
             }
