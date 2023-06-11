@@ -25,7 +25,5 @@ public class SignedIn extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 }
