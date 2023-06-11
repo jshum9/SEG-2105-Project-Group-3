@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Post-Logged in Screen"
+        android:text="Post Signed In Screen"
         android:textSize="32dp"
         android:layout_marginTop="16dp"/>
 
@@ -20,7 +20,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Log Off"/>
-
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

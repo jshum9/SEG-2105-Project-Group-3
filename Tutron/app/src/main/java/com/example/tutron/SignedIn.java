@@ -20,7 +20,7 @@ public class SignedIn extends AppCompatActivity {
         logOffBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnIntent = new Intent(SignedIn.this, MainActivity.class);
+                Intent returnIntent = new Intent(SignedIn.this, View.class);
                 startActivity(returnIntent);
                 finish();
             }
