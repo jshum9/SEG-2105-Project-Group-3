@@ -14,7 +14,6 @@ public class SignedIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in);
 
-        continueBtn = findViewById(R.id.continueBtn);
         logOffBtn = findViewById(R.id.logOffBtn);
 
         logOffBtn.setOnClickListener(new View.OnClickListener() {

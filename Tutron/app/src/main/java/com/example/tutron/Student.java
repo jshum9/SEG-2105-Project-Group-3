@@ -25,7 +25,7 @@ public class Student extends AppCompatActivity {
         password = findViewById(R.id.password);
         address = findViewById(R.id.address);
 
-                cardNumber = findViewById(R.id.cardNumber);
+        cardNumber = findViewById(R.id.cardNumber);
         expirationDate = findViewById(R.id.expDate);
         cvvNumber = findViewById(R.id.cvv);
 
