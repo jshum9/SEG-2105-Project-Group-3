@@ -49,18 +49,17 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     Toast.makeText(MainActivity.this,"User name or password cannot be empty.",Toast.LENGTH_SHORT).show();
                 }
+            }
+            //Register Button
+            //Go to register page starting from choosing role as a student or a tutor.
+        });
 
-                //Register Button
-                //Go to register page starting from choosing role as a student or a tutor.
-                registerBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this,GetTutorOrStudent.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,GetTutorOrStudent.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
