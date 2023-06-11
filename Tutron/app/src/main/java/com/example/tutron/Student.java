@@ -8,9 +8,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Student extends AppCompatActivity {
-    EditText firstName,lastName,emailAddress,password,address, userName;
+    EditText firstName,lastName,emailAddress,password,address,cardNumber,expirationDate,cvvNumber;
+
     Button backBtn,createBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,11 @@ public class Student extends AppCompatActivity {
         emailAddress = findViewById(R.id.emailAddress);
         password = findViewById(R.id.password);
         address = findViewById(R.id.address);
-        userName = findViewById(R.id.userStudentName);
+
+                cardNumber = findViewById(R.id.cardNumber);
+        expirationDate = findViewById(R.id.expDate);
+        cvvNumber = findViewById(R.id.cvv);
+
 
         backBtn = findViewById(R.id.studentBackButton);
         createBtn = findViewById(R.id.studentCreateButton);
@@ -45,22 +51,66 @@ public class Student extends AppCompatActivity {
                 String emailAddressTemp = emailAddress.getText().toString().trim();
                 String passwordTemp = password.getText().toString().trim();
                 String addressTemp = address.getText().toString().trim();
-                String userNameTemp = userName.getText().toString().trim();
+
+                String cardNumberTemp = cardNumber.getText().toString().trim();
+                String expirationDateTemp = expirationDate.getText().toString().trim();
+                String cvvNumTemp = cardNumber.getText().toString().trim();
+
+
                 Boolean dataSaved = false;
+                Boolean isCardNumInt = false;
+                Boolean isExpNumInt = false;
+                Boolean isCvvNUmInt = false;
 
                 if(!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp) && (!TextUtils.isEmpty(emailAddressTemp))
-                        && !TextUtils.isEmpty(passwordTemp) && !TextUtils.isEmpty(addressTemp) && !TextUtils.isEmpty(userNameTemp)){
-                    //save data code needed
-                    dataSaved = true;
-                }
-                if(dataSaved){
+                        && !TextUtils.isEmpty(passwordTemp) && !TextUtils.isEmpty(addressTemp) && !TextUtils.isEmpty(cardNumberTemp) &&
+                        !TextUtils.isEmpty(expirationDateTemp) && !TextUtils.isEmpty(cvvNumTemp)) {
+                        //save data code needed
+                                dataSaved = true;
 
-                    Intent register = new Intent(Student.this, MainActivity.class);
-                    startActivity(register);
-                    finish();
-                }
+                    }else{
+                        Toast.makeText(Student.this,"Please fill out everything",Toast.LENGTH_SHORT).show();
+                    }
 
-            }
-        });
+                    for(int i= cardNumberTemp.length(); i>=0; i--){
+                        if(!Character.isDigit(cardNumberTemp.charAt(i))){
+                            isCardNumInt = false;
+                        }
+                        isCardNumInt = true;
+                    }
+
+                    for(int i= expirationDateTemp.length(); i>=0; i--){
+                        if(!Character.isDigit(expirationDateTemp.charAt(i))){
+                            isExpNumInt = false;
+                        }
+                        isExpNumInt = true;
+                    }
+
+                    for(int i= cvvNumTemp.length(); i>=0; i--){
+                        if(!Character.isDigit(cvvNumTemp.charAt(i))){
+                            isCvvNUmInt = false;
+                        }
+                        isCvvNUmInt = true;
+                    }
+
+                    if(dataSaved){
+                        if(!isCardNumInt){
+                            Toast.makeText(Student.this,"Please enter valid card numbers",Toast.LENGTH_SHORT).show();
+                        }
+                        if(!isExpNumInt){
+                            Toast.makeText(Student.this,"Please enter valid expiration numbers",Toast.LENGTH_SHORT).show();
+                        }
+                        if(!isCvvNUmInt){
+                            Toast.makeText(Student.this,"Please enter valid CVV numbers",Toast.LENGTH_SHORT).show();
+                        }
+
+                        Toast.makeText(Student.this,"Register successful",Toast.LENGTH_SHORT).show();
+                        Intent register = new Intent(Student.this, MainActivity.class);
+                        startActivity(register);
+                        finish();
+                    }
+
+                }
+            });
+        }
     }
-}
