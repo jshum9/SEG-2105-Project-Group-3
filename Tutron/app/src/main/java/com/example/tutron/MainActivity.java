@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(userNameTemp) && !TextUtils.isEmpty(userPasswordTemp) ){
                     //Something needs to be done here to tell the user is a student or a tutor.
                     //Code needed
-                    if(userNameTemp.equals("xli532@uottawa.ca") && userPasswordTemp.equals("123456")){
+                    if(userNameTemp.equals("admin") && userPasswordTemp.equals("password")){
                         userData = true;
                     }
                     if (userData) {
