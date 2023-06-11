@@ -116,6 +116,6 @@
         android:id="@+id/tutorCreateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create" />
+        android:text="Create Account" />
 
 </LinearLayout>
