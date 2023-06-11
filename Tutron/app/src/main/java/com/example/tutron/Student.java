@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class Student extends AppCompatActivity {
-    EditText firstName,lastName,emailAddress,password,address;
+    EditText firstName,lastName,emailAddress,password,address, userName;
     Button backBtn,createBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class Student extends AppCompatActivity {
         emailAddress = findViewById(R.id.emailAddress);
         password = findViewById(R.id.password);
         address = findViewById(R.id.address);
+        userName = findViewById(R.id.userStudentName);
 
         backBtn = findViewById(R.id.studentBackButton);
         createBtn = findViewById(R.id.studentCreateButton);
@@ -44,10 +45,11 @@ public class Student extends AppCompatActivity {
                 String emailAddressTemp = emailAddress.getText().toString().trim();
                 String passwordTemp = password.getText().toString().trim();
                 String addressTemp = address.getText().toString().trim();
+                String userNameTemp = userName.getText().toString().trim();
                 Boolean dataSaved = false;
 
                 if(!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp) && (!TextUtils.isEmpty(emailAddressTemp))
-                        && !TextUtils.isEmpty(passwordTemp) && !TextUtils.isEmpty(addressTemp)){
+                        && !TextUtils.isEmpty(passwordTemp) && !TextUtils.isEmpty(addressTemp) && !TextUtils.isEmpty(userNameTemp)){
                     //save data code needed
                     dataSaved = true;
                 }
