@@ -46,14 +46,14 @@
 
             <EditText
                 android:inputType="text"
-                android:id="@+id/firstName"
+                android:id="@+id/tutorFirstName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="First name"/>
 
             <EditText
                 android:inputType="text"
-                android:id="@+id/lastName"
+                android:id="@+id/tutorLastName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Last name"/>
@@ -67,14 +67,14 @@
 
             <EditText
                 android:inputType="text"
-                android:id="@+id/emailAddress"
+                android:id="@+id/tutorEmailAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Email address"/>
 
             <EditText
                 android:inputType="text"
-                android:id="@+id/password"
+                android:id="@+id/tutorPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Account Password"/>

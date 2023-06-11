@@ -21,11 +21,11 @@ public class Tutor extends AppCompatActivity {
         setContentView(R.layout.activity_tutor);
 
         tutorUserName = findViewById(R.id.tutorUserName);
-        firstName = findViewById(R.id.firstName);
-        lastName = findViewById(R.id.lastName);
+        firstName = findViewById(R.id.tutorFirstName);
+        lastName = findViewById(R.id.tutorLastName);
         educationLevel = findViewById(R.id.educationLevel);
-        emailAddress = findViewById(R.id.emailAddress);
-        password = findViewById(R.id.password);
+        emailAddress = findViewById(R.id.tutorEmailAddress);
+        password = findViewById(R.id.tutorEmailAddress);
         language = findViewById(R.id.nativeLanguage);
         description = findViewById(R.id.description);
 
@@ -56,15 +56,12 @@ public class Tutor extends AppCompatActivity {
                 if (!TextUtils.isEmpty(userNameTemp) && !TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp)
                         && !TextUtils.isEmpty(educationTemp) && !TextUtils.isEmpty(emailTemp) && !TextUtils.isEmpty(passwordTemp)
                         && !TextUtils.isEmpty(languageTemp) && !TextUtils.isEmpty(descriptionTemp)) {
-                    dataSaved = true;
-                }
-                if (dataSaved) {
                     Toast.makeText(Tutor.this, "Successful!", Toast.LENGTH_SHORT).show();
                     Intent register = new Intent(Tutor.this, MainActivity.class);
                     startActivity(register);
                     finish();
                 } else {
-                    Toast.makeText(Tutor.this, "Failed\nAll fields must be filled in.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Tutor.this, "Failed. All fields must be filled in.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
