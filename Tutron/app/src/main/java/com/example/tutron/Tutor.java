@@ -17,6 +17,11 @@ public class Tutor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor);
 
+        tutorUserName = findViewById(R.id.tutorUserName);
+        firstName = findViewById(R.id.firstName);
+        lastName = findViewById(R.id.lastName);
+
+
         backTutorBtn = findViewById(R.id.tutorBackButton);
         backTutorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
