@@ -57,10 +57,10 @@ public class Student extends AppCompatActivity {
                 String cvvNumTemp = cardNumber.getText().toString().trim();
 
 
-                Boolean dataSaved = true;
-                Boolean isCardNumInt = true;
-                Boolean isExpNumInt = true;
-                Boolean isCvvNUmInt = true;
+                Boolean dataSaved = false;
+                Boolean isCardNumInt = false;
+                Boolean isExpNumInt = false;
+                Boolean isCvvNUmInt = false;
 
                 if(!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp) && (!TextUtils.isEmpty(emailAddressTemp))
                         && !TextUtils.isEmpty(passwordTemp) && !TextUtils.isEmpty(addressTemp) && !TextUtils.isEmpty(cardNumberTemp) &&
