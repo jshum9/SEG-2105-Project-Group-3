@@ -31,7 +31,7 @@ public class Tutor extends AppCompatActivity {
         createTutorBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent backIntent = new Intent(Tutor.this, MainActivity.this);
+                Intent backIntent = new Intent(Tutor.this, MainActivity.class);
                 startActivity(backIntent);
                 finish();
             }
