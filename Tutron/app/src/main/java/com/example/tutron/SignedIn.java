@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.Button;
 
 public class SignedIn extends AppCompatActivity {
-    Button returnHomeBtn,logOffBtn;
+    Button continueBtn,logOffBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in);
 
-        returnHomeBtn = findViewById(R.id.returnBtn);
+        continueBtn = findViewById(R.id.continueBtn);
         logOffBtn = findViewById(R.id.logOffBtn);
 
         logOffBtn.setOnClickListener(new View.OnClickListener() {
