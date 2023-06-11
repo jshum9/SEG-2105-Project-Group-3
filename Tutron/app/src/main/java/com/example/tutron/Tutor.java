@@ -51,7 +51,6 @@ public class Tutor extends AppCompatActivity {
                 String passwordTemp = password.getText().toString().trim();
                 String languageTemp = language.getText().toString().trim();
                 String descriptionTemp = language.getText().toString().trim();
-                Boolean dataSaved = false;
 
                 if (!TextUtils.isEmpty(userNameTemp) && !TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp)
                         && !TextUtils.isEmpty(educationTemp) && !TextUtils.isEmpty(emailTemp) && !TextUtils.isEmpty(passwordTemp)
