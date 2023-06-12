@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class SignedIn extends AppCompatActivity {
     Button continueBtn,logOffBtn;
     @Override
@@ -25,4 +28,6 @@ public class SignedIn extends AppCompatActivity {
             }
         });
     }
+
+
 }
