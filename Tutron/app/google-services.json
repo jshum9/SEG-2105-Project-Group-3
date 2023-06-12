@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1006187887770",
+    "project_id": "seg-2105-group-project-f5fd7",
+    "storage_bucket": "seg-2105-group-project-f5fd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006187887770:android:b600d286e103c208bfb323",
+        "android_client_info": {
+          "package_name": "com.example.tutron"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006187887770-vphasibofpo5j9igs49k8cv8ph9smvbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9P12agH-J2JMUvcfqfnBUzGzmP9YvDkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006187887770-vphasibofpo5j9igs49k8cv8ph9smvbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,10 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Tutor extends AppCompatActivity {
     EditText tutorUserName, firstName, lastName, educationLevel, emailAddress, password, language, description;
     Button backTutorBtn;
     Button createTutorBtn;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,7 @@ public class Tutor extends AppCompatActivity {
         lastName = findViewById(R.id.tutorLastName);
         educationLevel = findViewById(R.id.educationLevel);
         emailAddress = findViewById(R.id.tutorEmailAddress);
-        password = findViewById(R.id.tutorEmailAddress);
+        password = findViewById(R.id.tutorPassword);
         language = findViewById(R.id.nativeLanguage);
         description = findViewById(R.id.description);
 
@@ -61,6 +66,11 @@ public class Tutor extends AppCompatActivity {
                     Toast.makeText(Tutor.this, "Failed. All fields must be filled in.", Toast.LENGTH_SHORT).show();
                 }
                 if(dataSaved){
+                    database = FirebaseDatabase.getInstance();
+                    reference = database.getReference("Registrations");
+                    HelperClass helperClass = new HelperClass(userNameTemp, passwordTemp, "Tutor");
+                    reference.child(userNameTemp).setValue(helperClass);
+
                     Toast.makeText(Tutor.this, "Successful!", Toast.LENGTH_SHORT).show();
                     Intent register = new Intent(Tutor.this, MainActivity.class);
                     startActivity(register);

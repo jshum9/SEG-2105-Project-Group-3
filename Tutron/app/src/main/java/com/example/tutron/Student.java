@@ -10,8 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Student extends AppCompatActivity {
-    EditText firstName,lastName,emailAddress,password,address,cardNumber,expirationDate,cvvNumber;
+    EditText userName,firstName,lastName,emailAddress,password,address,cardNumber,expirationDate,cvvNumber;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     Button backBtn,createBtn;
     @Override
@@ -19,6 +24,7 @@ public class Student extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
 
+        userName = findViewById(R.id.userStudentName);
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
         emailAddress = findViewById(R.id.emailAddress);
@@ -46,6 +52,7 @@ public class Student extends AppCompatActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String userNameTemp = userName.getText().toString().trim();
                 String firstNameTemp = firstName.getText().toString().trim();
                 String lastNameTemp = lastName.getText().toString().trim();
                 String emailAddressTemp = emailAddress.getText().toString().trim();
@@ -62,33 +69,33 @@ public class Student extends AppCompatActivity {
                 Boolean isExpNumInt = false;
                 Boolean isCvvNUmInt = false;
 
-                if(!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp) && (!TextUtils.isEmpty(emailAddressTemp))
+                if (!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp) && (!TextUtils.isEmpty(emailAddressTemp))
                         && !TextUtils.isEmpty(passwordTemp) && !TextUtils.isEmpty(addressTemp) && !TextUtils.isEmpty(cardNumberTemp) &&
-                        !TextUtils.isEmpty(expirationDateTemp) && !TextUtils.isEmpty(cvvNumTemp)) {
-                    //save data code needed
+                        !TextUtils.isEmpty(expirationDateTemp) && !TextUtils.isEmpty(cvvNumTemp) &&
+                        !TextUtils.isEmpty(userNameTemp)) {
                     dataSaved = true;
 
-                }else{
-                    Toast.makeText(Student.this,"Please fill out everything",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Student.this, "Please fill out everything", Toast.LENGTH_SHORT).show();
                 }
 
-                if(!TextUtils.isEmpty(cardNumberTemp) && !TextUtils.isEmpty(expirationDateTemp) && !TextUtils.isEmpty(cvvNumTemp) ){
-                    for(int i= cardNumberTemp.length(); i>=0; i--){
-                        if(!Character.isDigit(cardNumberTemp.charAt(i))){
+                if (!TextUtils.isEmpty(cardNumberTemp) && !TextUtils.isEmpty(expirationDateTemp) && !TextUtils.isEmpty(cvvNumTemp)) {
+                    for (int i = cardNumberTemp.length(); i >= 0; i--) {
+                        if (!Character.isDigit(cardNumberTemp.charAt(i))) {
                             isCardNumInt = true;
                         }
                         isCardNumInt = false;
                     }
 
-                    for(int i= expirationDateTemp.length(); i>=0; i--){
-                        if(!Character.isDigit(expirationDateTemp.charAt(i))){
+                    for (int i = expirationDateTemp.length(); i >= 0; i--) {
+                        if (!Character.isDigit(expirationDateTemp.charAt(i))) {
                             isExpNumInt = true;
                         }
                         isExpNumInt = false;
                     }
 
-                    for(int i= cvvNumTemp.length(); i>=0; i--){
-                        if(!Character.isDigit(cvvNumTemp.charAt(i))){
+                    for (int i = cvvNumTemp.length(); i >= 0; i--) {
+                        if (!Character.isDigit(cvvNumTemp.charAt(i))) {
                             isCvvNUmInt = true;
                         }
                         isCvvNUmInt = false;
@@ -96,24 +103,25 @@ public class Student extends AppCompatActivity {
                 }
 
 
-
-                if(dataSaved){
+                if (dataSaved) {
                     if(!isCardNumInt){
-                        Toast.makeText(Student.this,"Please enter valid card numbers",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Student.this,"Please enter valid card numbers",Toast.LENGTH_SHORT).show();
                     }
                     if(!isExpNumInt){
-                        Toast.makeText(Student.this,"Please enter valid expiration numbers",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Student.this,"Please enter valid expiration numbers",Toast.LENGTH_SHORT).show();
                     }
-                    if(!isCvvNUmInt){
-                        Toast.makeText(Student.this,"Please enter valid CVV numbers",Toast.LENGTH_SHORT).show();
+                    if(!isCvvNUmInt) {
+                        Toast.makeText(Student.this, "Please enter valid CVV numbers", Toast.LENGTH_SHORT).show();
                     }
-
-                    Toast.makeText(Student.this,"Register successful",Toast.LENGTH_SHORT).show();
-                    Intent register = new Intent(Student.this, MainActivity.class);
-                    startActivity(register);
-                    finish();
+                    database = FirebaseDatabase.getInstance();
+                    reference = database.getReference("path");
+                    HelperClass helperClass = new HelperClass(userNameTemp, passwordTemp, "Student");
+                    reference.child(userNameTemp).setValue(helperClass);
+                     Toast.makeText(Student.this, "Register successful", Toast.LENGTH_SHORT).show();
+                     Intent register = new Intent(Student.this, MainActivity.class);
+                     startActivity(register);
+                     finish();
                 }
-
             }
         });
     }
