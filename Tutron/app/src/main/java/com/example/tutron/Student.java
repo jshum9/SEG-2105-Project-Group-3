@@ -10,13 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Student extends AppCompatActivity {
     EditText userName,firstName,lastName,emailAddress,password,address,cardNumber,expirationDate,cvvNumber;
     FirebaseDatabase database;
-    DatabaseReference reference;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://seg-2105-group-project-f5fd7-default-rtdb.firebaseio.com/");
 
     Button backBtn,createBtn;
     @Override
@@ -113,10 +116,16 @@ public class Student extends AppCompatActivity {
                     if(!isCvvNUmInt) {
                         Toast.makeText(Student.this, "Please enter valid CVV numbers", Toast.LENGTH_SHORT).show();
                     }
-                    database = FirebaseDatabase.getInstance();
-                    reference = database.getReference("path");
-                    HelperClass helperClass = new HelperClass(userNameTemp, passwordTemp, "Student");
-                    reference.child(userNameTemp).setValue(helperClass);
+                    databaseReference.child("users").child(userNameTemp).child("first name").setValue(firstNameTemp);
+                    databaseReference.child("users").child(userNameTemp).child("last name").setValue(lastNameTemp);
+                    databaseReference.child("users").child(userNameTemp).child("email").setValue(emailAddressTemp);
+                    databaseReference.child("users").child(userNameTemp).child("password").setValue(passwordTemp);
+                    databaseReference.child("users").child(userNameTemp).child("address").setValue(addressTemp);
+                    databaseReference.child("users").child(userNameTemp).child("Credit Card Number").setValue(cardNumberTemp);
+                    databaseReference.child("users").child(userNameTemp).child("Expiration Date").setValue(expirationDateTemp);
+                    databaseReference.child("users").child(userNameTemp).child("cvv Number").setValue(cvvNumTemp);
+
+
                      Toast.makeText(Student.this, "Register successful", Toast.LENGTH_SHORT).show();
                      Intent register = new Intent(Student.this, MainActivity.class);
                      startActivity(register);
