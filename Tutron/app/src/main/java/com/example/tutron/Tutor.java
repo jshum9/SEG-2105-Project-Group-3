@@ -67,7 +67,7 @@ public class Tutor extends AppCompatActivity {
                 }
                 if(dataSaved){
                     database = FirebaseDatabase.getInstance();
-                    reference = database.getReference("Registrations");
+                    reference = database.getReference("users");
                     HelperClass helperClass = new HelperClass(userNameTemp, passwordTemp, "Tutor");
                     reference.child(userNameTemp).setValue(helperClass);
 

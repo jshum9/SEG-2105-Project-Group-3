@@ -44,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
                     //Something needs to be done here to tell the user is a student or a tutor.
                     //Code needed
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-                    Query checkUserDatabase = reference.orderByChild("userName").equalTo(userNameTemp);
+                    Query checkUserDatabase = reference.orderByChild("username").equalTo(userNameTemp);
                     checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()){
                                 //userNameTemp.setError(null);
-                                String passwordFromDB = snapshot.child(userPasswordTemp).child("password").getValue(String.class);
+                                String passwordFromDB = snapshot.child(userNameTemp).child("password").getValue(String.class);
 
                                 if (passwordFromDB.equals(userPasswordTemp)){
                                     //userNameTemp.setError(null);
