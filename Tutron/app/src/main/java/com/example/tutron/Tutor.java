@@ -77,7 +77,7 @@ public class Tutor extends AppCompatActivity {
                     databaseReference.child("users").child(userNameTemp).child("password").setValue(passwordTemp);
                     databaseReference.child("users").child(userNameTemp).child("language").setValue(languageTemp);
                     databaseReference.child("users").child(userNameTemp).child("description").setValue(descriptionTemp);
-                    databaseReference.child("users").child(userNameTemp).child("user type").setValue("tutor");
+                    databaseReference.child("users").child(userNameTemp).child("user type").setValue("Tutor");
 
                     //database = FirebaseDatabase.getInstance();
                     //reference = database.getReference("users");
