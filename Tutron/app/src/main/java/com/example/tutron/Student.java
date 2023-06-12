@@ -36,7 +36,7 @@ public class Student extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backIntent = new Intent(Student.this, MainActivity.class);
+                Intent backIntent = new Intent(Student.this, GetTutorOrStudent.class);
                 startActivity(backIntent);
                 finish();
             }
