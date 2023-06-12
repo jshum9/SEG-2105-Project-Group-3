@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     EditText userName,userPassword;
     Button loginBtn,registerBtn;
 
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://seg-2105-group-project-f5fd7-default-rtdb.firebaseio.com/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,30 +44,26 @@ public class MainActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(userNameTemp) && !TextUtils.isEmpty(userPasswordTemp) ){
                     //Something needs to be done here to tell the user is a student or a tutor.
                     //Code needed
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-                    Query checkUserDatabase = reference.orderByChild("username").equalTo(userNameTemp);
-                    checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()){
-                                //userNameTemp.setError(null);
-                                String passwordFromDB = snapshot.child(userNameTemp).child("password").getValue(String.class);
-
-                                if (passwordFromDB.equals(userPasswordTemp)){
-                                    //userNameTemp.setError(null);
-                                    String nameFromDB = snapshot.child(userNameTemp).child("name").getValue(String.class);
-
-                                    Intent intent = new Intent(MainActivity.this, SignedIn.class);
-
-                                    intent.putExtra("username", nameFromDB);
-                                    intent.putExtra("password", passwordFromDB);
+                            //check if user name is in database
+                            if(snapshot.hasChild(userNameTemp)){
+                                //user name exists in database
+                                String getPassword = snapshot.child(userNameTemp).child("password").getValue(String.class);
+                                if (getPassword.equals(userPasswordTemp)){
                                     Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MainActivity.this, SignedIn.class);
                                     startActivity(intent);
                                     finish();
-
-                                } else{
-                                    Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                 }
+                                else{
+                                    Toast.makeText(MainActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else{
+                                Toast.makeText(MainActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override
@@ -74,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+
                 } else{
                     Toast.makeText(MainActivity.this,"User name or password cannot be empty.",Toast.LENGTH_SHORT).show();
                 }
