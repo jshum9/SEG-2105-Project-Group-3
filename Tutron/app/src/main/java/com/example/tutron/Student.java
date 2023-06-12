@@ -81,41 +81,13 @@ public class Student extends AppCompatActivity {
                 } else {
                     Toast.makeText(Student.this, "Please fill out everything", Toast.LENGTH_SHORT).show();
                 }
+                //FLAG HERE FOR DELETED CODE
 
-                if (!TextUtils.isEmpty(cardNumberTemp) && !TextUtils.isEmpty(expirationDateTemp) && !TextUtils.isEmpty(cvvNumTemp)) {
-                    for (int i = cardNumberTemp.length(); i >= 0; i--) {
-                        if (!Character.isDigit(cardNumberTemp.charAt(i))) {
-                            isCardNumInt = true;
-                        }
-                        isCardNumInt = false;
-                    }
-
-                    for (int i = expirationDateTemp.length(); i >= 0; i--) {
-                        if (!Character.isDigit(expirationDateTemp.charAt(i))) {
-                            isExpNumInt = true;
-                        }
-                        isExpNumInt = false;
-                    }
-
-                    for (int i = cvvNumTemp.length(); i >= 0; i--) {
-                        if (!Character.isDigit(cvvNumTemp.charAt(i))) {
-                            isCvvNUmInt = true;
-                        }
-                        isCvvNUmInt = false;
-                    }
-                }
 
 
                 if (dataSaved) {
-                    if(!isCardNumInt){
-                    Toast.makeText(Student.this,"Please enter valid card numbers",Toast.LENGTH_SHORT).show();
-                    }
-                    if(!isExpNumInt){
-                    Toast.makeText(Student.this,"Please enter valid expiration numbers",Toast.LENGTH_SHORT).show();
-                    }
-                    if(!isCvvNUmInt) {
-                        Toast.makeText(Student.this, "Please enter valid CVV numbers", Toast.LENGTH_SHORT).show();
-                    }
+                    //FLAG HERE FOR DELETED CODE
+
                     databaseReference.child("users").child(userNameTemp).child("first name").setValue(firstNameTemp);
                     databaseReference.child("users").child(userNameTemp).child("last name").setValue(lastNameTemp);
                     databaseReference.child("users").child(userNameTemp).child("email").setValue(emailAddressTemp);
