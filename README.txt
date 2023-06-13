@@ -1,6 +1,6 @@
 Team Members: 
 Xinghao Li (300233504)
-Georgio Monsef ()
+Georgio Monsef (300302140)
 Shawhin Niktash (300298189)
 Jason Shum (300239381)
 
