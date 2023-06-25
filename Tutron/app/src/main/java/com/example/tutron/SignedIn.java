@@ -24,10 +24,22 @@ public class SignedIn extends AppCompatActivity {
 
         roleTextview = findViewById(R.id.role);
         logOffBtn = findViewById(R.id.logOffBtn);
+        continueBtn = findViewById(R.id.continueBtn);
 
         Intent intentRole = getIntent();
         String role = intentRole.getStringExtra("role");
         roleTextview.setText(role);
+
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(role.equals("Administrator")){
+                    Intent adminIntent = new Intent(SignedIn.this, Administrator.class);
+                    startActivity(adminIntent);
+                    finish();
+                }
+            }
+        });
 
         logOffBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -35,6 +35,12 @@
             android:layout_height="wrap_content"
             android:text="Log Off" />
 
+        <Button
+            android:id="@+id/continueBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continue" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
