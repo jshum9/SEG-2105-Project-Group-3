@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (getPassword.equals(userPasswordTemp)){
                                     Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MainActivity.this, SignedIn.class);
+                                    intent.putExtra("role",snapshot.child(userNameTemp).child("type").getValue(String.class));
                                     startActivity(intent);
                                     finish();
                                 }

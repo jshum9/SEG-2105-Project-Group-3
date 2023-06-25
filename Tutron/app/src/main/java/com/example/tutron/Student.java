@@ -96,7 +96,7 @@ public class Student extends AppCompatActivity {
                     databaseReference.child("users").child(userNameTemp).child("Credit Card Number").setValue(cardNumberTemp);
                     databaseReference.child("users").child(userNameTemp).child("Expiration Date").setValue(expirationDateTemp);
                     databaseReference.child("users").child(userNameTemp).child("cvv Number").setValue(cvvNumTemp);
-
+                    databaseReference.child("users").child(userNameTemp).child("type").setValue("Student");
 
                      Toast.makeText(Student.this, "Register successful", Toast.LENGTH_SHORT).show();
                      Intent register = new Intent(Student.this, MainActivity.class);
