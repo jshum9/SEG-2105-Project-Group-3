@@ -8,6 +8,6 @@ public class AdministratorAccount extends User{
 
 
     public AdministratorAccount(String userName, String password) {
-        super(userName, null, null, null, password);
+        super(null, null, null, password);
     }
 }

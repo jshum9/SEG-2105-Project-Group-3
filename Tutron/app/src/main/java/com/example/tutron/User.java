@@ -1,12 +1,11 @@
 package com.example.tutron;
 
 public class User {
-    private String nickName,firstName,lastName,emailAddress,password;
+    private String firstName,lastName,emailAddress,password;
 
     public User(){}
 
-    public User(String nickName, String firstName, String lastName, String emailAddress, String password){
-        this.nickName = nickName;
+    public User(String firstName, String lastName, String emailAddress, String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;

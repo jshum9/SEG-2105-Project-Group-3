@@ -6,9 +6,9 @@ public class StudentAccount extends User{
     public StudentAccount(){}
 
 
-    public StudentAccount(String nickName, String firstName, String lastName, String emailAddress, String password,
+    public StudentAccount(String firstName, String lastName, String emailAddress, String password,
                           String address, String cardNumber, String expNumber, String cvvNumber) {
-        super(nickName, firstName, lastName, emailAddress, password);
+        super(firstName, lastName, emailAddress, password);
         this.address =address;
         this.cardNumber = cardNumber;
         this.expNumber =expNumber;

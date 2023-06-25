@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -17,10 +18,16 @@ public class ProcessComplaint extends AppCompatActivity {
     //We need to get Tutor id from xml files.
     //I don't figure it out how.
     String tutorId;
+    String complaint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process_complaint);
+
+        TextView complaint = (TextView) findViewById(R.id.textComplaint);
+        complaint.setText("COMPLAINT");
+        setContentView(complaint);
 
         suspendBtn = findViewById(R.id.suspendBtn);
         dismissBtn = findViewById(R.id.dismissBtn);
