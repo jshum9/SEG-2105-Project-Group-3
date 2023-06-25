@@ -61,6 +61,9 @@ public class Administrator extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Complaint complaint = complaints.get(position);
                 showSuspendDismissDialog(complaint.getId(), complaint.getComplaint(), complaint.getTutorEmail(), complaint.getStudentEmail());
+                //String selectedComplaint = complaint.getComplaint();
+                //Intent intent = new Intent(Administrator.this, ProcessComplaint.class);
+                //intent.putExtra()
             }
         });
     }
@@ -71,7 +74,7 @@ public class Administrator extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.activity_process_complaint, null);
         dialogBuilder.setView(dialogView);
 
-        final TextView complaintText = (TextView) dialogView.findViewById(R.id.textComplaint);
+        //final TextView complaintText = (TextView) dialogView.findViewById(R.id.textComplaint);
         final Spinner yearSpinner = (Spinner) dialogView.findViewById(R.id.yearSpinner);
         final Spinner monthSpinner = (Spinner) dialogView.findViewById(R.id.monthSpinner);
         final Spinner daySpinner = (Spinner) dialogView.findViewById(R.id.daySpinner);
@@ -81,6 +84,7 @@ public class Administrator extends AppCompatActivity {
 
         //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
         final AlertDialog dialog = dialogBuilder.create();
+        dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student);
         dialog.show();
 
         //TODO: figure out how to implement the spinners to select date

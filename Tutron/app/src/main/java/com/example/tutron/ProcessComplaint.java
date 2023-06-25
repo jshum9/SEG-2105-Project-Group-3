@@ -25,10 +25,6 @@ public class ProcessComplaint extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process_complaint);
 
-        TextView complaint = (TextView) findViewById(R.id.textComplaint);
-        complaint.setText("COMPLAINT");
-        setContentView(complaint);
-
         suspendBtn = findViewById(R.id.suspendBtn);
         dismissBtn = findViewById(R.id.dismissBtn);
         backBtn = findViewById(R.id.backBtn);

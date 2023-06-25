@@ -24,7 +24,7 @@
         android:textStyle="bold"
         android:layout_marginTop="15dp"/>
 
-    <androidx.cardview.widget.CardView
+    <!--<androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -44,7 +44,27 @@
                 android:text="bla bla bla....."/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
+
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/suspendBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suspend"/>
+
+        <Button
+            android:id="@+id/dismissBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dismiss"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -73,26 +93,6 @@
             android:minHeight="48dp"
             android:layout_weight="1"/>
     </LinearLayout>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/suspendBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Suspend"/>
-
-        <Button
-            android:id="@+id/dismissBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dismiss"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 
     <Button
         android:layout_marginTop="32dp"
