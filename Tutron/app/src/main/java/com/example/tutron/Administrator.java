@@ -61,7 +61,6 @@ public class Administrator extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Complaint complaint = complaints.get(position);
                 showSuspendDismissDialog(complaint.getId(), complaint.getComplaint(), complaint.getTutorEmail(), complaint.getStudentEmail());
-                return true;
             }
         });
     }
