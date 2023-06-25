@@ -67,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
                                             Toast.makeText(MainActivity.this, "Your account has been dismissed.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
+
+                                    else if(role.equals("Administrator")){
+                                        Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, Administrator.class);
+                                        intent.putExtra("role",role);
+                                        startActivity(intent);
+                                    }
+
+                                    else{
+                                        Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, SignedIn.class);
+                                        intent.putExtra("role",role);
+                                        startActivity(intent);
+                                    }
                                 }
                                 else{
                                     Toast.makeText(MainActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();

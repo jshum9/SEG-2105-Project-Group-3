@@ -18,8 +18,6 @@ public class SignedIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_signed_in);
 
         roleTextview = findViewById(R.id.role);
