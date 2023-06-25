@@ -29,7 +29,6 @@ public class Tutor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor);
 
-        tutorUserName = findViewById(R.id.tutorUserName);
         firstName = findViewById(R.id.tutorFirstName);
         lastName = findViewById(R.id.tutorLastName);
         educationLevel = findViewById(R.id.educationLevel);
@@ -52,7 +51,6 @@ public class Tutor extends AppCompatActivity {
         createTutorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userNameTemp = tutorUserName.getText().toString().trim();
                 String firstNameTemp = firstName.getText().toString().trim();
                 String lastNameTemp = lastName.getText().toString().trim();
                 String educationTemp = educationLevel.getText().toString().trim();
@@ -62,7 +60,7 @@ public class Tutor extends AppCompatActivity {
                 String descriptionTemp = description.getText().toString().trim();
                 Boolean dataSaved = false;
 
-                if (!TextUtils.isEmpty(userNameTemp) && !TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp)
+                if (!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp)
                         && !TextUtils.isEmpty(educationTemp) && !TextUtils.isEmpty(emailTemp) && !TextUtils.isEmpty(passwordTemp)
                         && !TextUtils.isEmpty(languageTemp) && !TextUtils.isEmpty(descriptionTemp)) {
                     dataSaved = true;
@@ -85,7 +83,7 @@ public class Tutor extends AppCompatActivity {
                     //HelperClass helperClass = new HelperClass(userNameTemp, passwordTemp, "Tutor");
                     //reference.child(userNameTemp).setValue(helperClass);
 
-                    Toast.makeText(Tutor.this, "Successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Tutor.this, "Registration successful!", Toast.LENGTH_SHORT).show();
                     Intent register = new Intent(Tutor.this, MainActivity.class);
                     startActivity(register);
                     finish();

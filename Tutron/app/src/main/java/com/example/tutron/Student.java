@@ -27,7 +27,6 @@ public class Student extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
 
-        userName = findViewById(R.id.userStudentName);
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
         emailAddress = findViewById(R.id.emailAddress);
@@ -55,7 +54,6 @@ public class Student extends AppCompatActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userNameTemp = userName.getText().toString().trim();
                 String firstNameTemp = firstName.getText().toString().trim();
                 String lastNameTemp = lastName.getText().toString().trim();
                 String emailAddressTemp = emailAddress.getText().toString().trim();
@@ -64,7 +62,7 @@ public class Student extends AppCompatActivity {
 
                 String cardNumberTemp = cardNumber.getText().toString().trim();
                 String expirationDateTemp = expirationDate.getText().toString().trim();
-                String cvvNumTemp = cardNumber.getText().toString().trim();
+                String cvvNumTemp = cvvNumber.getText().toString().trim();
 
 
                 Boolean dataSaved = false;
@@ -74,8 +72,7 @@ public class Student extends AppCompatActivity {
 
                 if (!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp) && (!TextUtils.isEmpty(emailAddressTemp))
                         && !TextUtils.isEmpty(passwordTemp) && !TextUtils.isEmpty(addressTemp) && !TextUtils.isEmpty(cardNumberTemp) &&
-                        !TextUtils.isEmpty(expirationDateTemp) && !TextUtils.isEmpty(cvvNumTemp) &&
-                        !TextUtils.isEmpty(userNameTemp)) {
+                        !TextUtils.isEmpty(expirationDateTemp) && !TextUtils.isEmpty(cvvNumTemp)) {
                     dataSaved = true;
 
                 } else {
