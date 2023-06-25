@@ -88,15 +88,15 @@ public class Student extends AppCompatActivity {
                 if (dataSaved) {
                     //FLAG HERE FOR DELETED CODE
 
-                    databaseReference.child("users").child(userNameTemp).child("first name").setValue(firstNameTemp);
-                    databaseReference.child("users").child(userNameTemp).child("last name").setValue(lastNameTemp);
-                    databaseReference.child("users").child(userNameTemp).child("email").setValue(emailAddressTemp);
-                    databaseReference.child("users").child(userNameTemp).child("password").setValue(passwordTemp);
-                    databaseReference.child("users").child(userNameTemp).child("address").setValue(addressTemp);
-                    databaseReference.child("users").child(userNameTemp).child("Credit Card Number").setValue(cardNumberTemp);
-                    databaseReference.child("users").child(userNameTemp).child("Expiration Date").setValue(expirationDateTemp);
-                    databaseReference.child("users").child(userNameTemp).child("cvv Number").setValue(cvvNumTemp);
-                    databaseReference.child("users").child(userNameTemp).child("type").setValue("Student");
+                    databaseReference.child("users").child(emailAddressTemp).child("first name").setValue(firstNameTemp);
+                    databaseReference.child("users").child(emailAddressTemp).child("last name").setValue(lastNameTemp);
+                    databaseReference.child("users").child(emailAddressTemp).child("email").setValue(emailAddressTemp);
+                    databaseReference.child("users").child(emailAddressTemp).child("password").setValue(passwordTemp);
+                    databaseReference.child("users").child(emailAddressTemp).child("address").setValue(addressTemp);
+                    databaseReference.child("users").child(emailAddressTemp).child("Credit Card Number").setValue(cardNumberTemp);
+                    databaseReference.child("users").child(emailAddressTemp).child("Expiration Date").setValue(expirationDateTemp);
+                    databaseReference.child("users").child(emailAddressTemp).child("cvv Number").setValue(cvvNumTemp);
+                    databaseReference.child("users").child(emailAddressTemp).child("type").setValue("Student");
 
                      Toast.makeText(Student.this, "Register successful", Toast.LENGTH_SHORT).show();
                      Intent register = new Intent(Student.this, MainActivity.class);

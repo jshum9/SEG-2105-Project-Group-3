@@ -27,12 +27,6 @@
             android:orientation="vertical"
             android:layout_margin="16dp">
 
-            <EditText
-                android:inputType="text"
-                android:id="@+id/tutorUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="User Name"/>
 
             <EditText
                 android:inputType="text"

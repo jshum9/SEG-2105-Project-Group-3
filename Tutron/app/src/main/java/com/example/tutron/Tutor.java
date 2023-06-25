@@ -70,15 +70,15 @@ public class Tutor extends AppCompatActivity {
                     Toast.makeText(Tutor.this, "Failed. All fields must be filled in.", Toast.LENGTH_SHORT).show();
                 }
                 if(dataSaved){
-                    databaseReference.child("users").child(userNameTemp).child("first name").setValue(firstNameTemp);
-                    databaseReference.child("users").child(userNameTemp).child("last name").setValue(lastNameTemp);
-                    databaseReference.child("users").child(userNameTemp).child("education").setValue(educationTemp);
-                    databaseReference.child("users").child(userNameTemp).child("email").setValue(emailTemp);
-                    databaseReference.child("users").child(userNameTemp).child("password").setValue(passwordTemp);
-                    databaseReference.child("users").child(userNameTemp).child("language").setValue(languageTemp);
-                    databaseReference.child("users").child(userNameTemp).child("description").setValue(descriptionTemp);
-                    databaseReference.child("users").child(userNameTemp).child("type").setValue("Tutor");
-                    databaseReference.child("users").child(userNameTemp).child("status").setValue("Active");
+                    databaseReference.child("users").child(emailTemp).child("first name").setValue(firstNameTemp);
+                    databaseReference.child("users").child(emailTemp).child("last name").setValue(lastNameTemp);
+                    databaseReference.child("users").child(emailTemp).child("education").setValue(educationTemp);
+                    databaseReference.child("users").child(emailTemp).child("email").setValue(emailTemp);
+                    databaseReference.child("users").child(emailTemp).child("password").setValue(passwordTemp);
+                    databaseReference.child("users").child(emailTemp).child("language").setValue(languageTemp);
+                    databaseReference.child("users").child(emailTemp).child("description").setValue(descriptionTemp);
+                    databaseReference.child("users").child(emailTemp).child("type").setValue("Tutor");
+                    databaseReference.child("users").child(emailTemp).child("status").setValue("Active");
 
                     //database = FirebaseDatabase.getInstance();
                     //reference = database.getReference("users");
