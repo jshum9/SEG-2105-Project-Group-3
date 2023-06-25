@@ -26,10 +26,14 @@ public class ComplaintList extends ArrayAdapter<Complaint> {
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.layout_complaint, null, true);
 
-        TextView textViewName = listViewItem.findViewById(R.id.textViewComplaint);
+        TextView textViewComplaint = listViewItem.findViewById(R.id.textViewComplaint);
+        TextView textViewStudent = listViewItem.findViewById(R.id.textViewStudent);
+        TextView textViewTutor = listViewItem.findViewById(R.id.textViewTutor);
 
         Complaint complaint = complaints.get(position);
-        textViewName.setText(complaint.getComplaint());
+        textViewComplaint.setText(complaint.getComplaint());
+        textViewStudent.append(complaint.getStudentEmail());
+        textViewTutor.append(complaint.getTutorEmail());
         return listViewItem;
     }
 

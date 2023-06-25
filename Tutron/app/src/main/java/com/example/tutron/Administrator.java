@@ -3,7 +3,9 @@ package com.example.tutron;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -35,6 +37,17 @@ public class Administrator extends AppCompatActivity {
         complaints = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Complaints");
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backIntent = new Intent(Administrator.this,MainActivity.class);
+                startActivity(backIntent);
+                finish();
+            }
+        });
+
+
     }
 
     protected void onStart(){
