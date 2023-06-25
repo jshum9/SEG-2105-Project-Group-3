@@ -83,7 +83,10 @@ public class Administrator extends AppCompatActivity {
         final AlertDialog dialog = dialogBuilder.create();
         dialog.show();
 
+        //TODO: figure out how to implement the spinners to select date
+
         //Suspension Button
+        //TODO: complete function so that admin can suspend tutor
         suspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +95,7 @@ public class Administrator extends AppCompatActivity {
         });
 
         //Dismiss Button
+        //TODO: complete function so that admin can dismiss complaint
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
