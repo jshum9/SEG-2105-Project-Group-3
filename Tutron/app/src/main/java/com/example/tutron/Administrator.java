@@ -3,12 +3,17 @@ package com.example.tutron;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +43,8 @@ public class Administrator extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Complaints");
 
+        onItemLongClick();
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,8 +53,51 @@ public class Administrator extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    private void onItemLongClick() {
+        listViewComplaints.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Complaint complaint = complaints.get(position);
+                showSuspendDismissDialog(complaint.getId(), complaint.getComplaint(), complaint.getTutorEmail(), complaint.getStudentEmail());
+                return true;
+            }
+        });
+    }
 
+    private void showSuspendDismissDialog(String complaintId, String complaint, String tutor, String student){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_process_complaint, null);
+        dialogBuilder.setView(dialogView);
+
+        final TextView complaintText = (TextView) dialogView.findViewById(R.id.textComplaint);
+        final Spinner yearSpinner = (Spinner) dialogView.findViewById(R.id.yearSpinner);
+        final Spinner monthSpinner = (Spinner) dialogView.findViewById(R.id.monthSpinner);
+        final Spinner daySpinner = (Spinner) dialogView.findViewById(R.id.daySpinner);
+        final Button suspend = (Button) dialogView.findViewById(R.id.suspendBtn);
+        final Button dismiss = (Button) dialogView.findViewById(R.id.dismissBtn);
+
+        dialogBuilder.setTitle(complaint).setMessage(tutor).setMessage(student);
+        final AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+
+        //Suspension Button
+        suspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //Dismiss Button
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     protected void onStart(){
