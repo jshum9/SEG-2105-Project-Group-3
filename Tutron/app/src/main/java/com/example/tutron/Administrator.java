@@ -77,8 +77,9 @@ public class Administrator extends AppCompatActivity {
         final Spinner daySpinner = (Spinner) dialogView.findViewById(R.id.daySpinner);
         final Button suspend = (Button) dialogView.findViewById(R.id.suspendBtn);
         final Button dismiss = (Button) dialogView.findViewById(R.id.dismissBtn);
+        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
 
-        dialogBuilder.setTitle(complaint).setMessage(tutor).setMessage(student);
+        //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
         final AlertDialog dialog = dialogBuilder.create();
         dialog.show();
 
@@ -95,6 +96,14 @@ public class Administrator extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        //Back Button
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
             }
         });
     }
