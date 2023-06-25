@@ -35,14 +35,6 @@ public class Administrator extends AppCompatActivity {
         complaints = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Complaints");
-
-        //////////////////////TEST CASE DELETE BEFORE SUBMISSION/////////////////////
-        String id = databaseReference.push().getKey();
-        Complaint complaint = new Complaint("This is a test complaint. I don't like my Tutor, he sucks. Give me new one! I want my money BACK!!!! I got bad grade.... Bla bla..adfajdf;lajdfl;ajdfljal;kdjfal;sjdflajdfl;jasdl;kfjals;djf;alksdjfla;ksdjflkajsdl;fkjasld;jfal;ksdjfl;kajsdlf;kjasldk;fjalksdjflkajsdlfkjalksdjflak;sdjfl;ajsdfl;kajsdfl;kjasdlkfjalds;kjfal;sdjflajdfl;kajdslf;kjasdl;kfjal;sdjfl;ajsd;flakjdsfl;kajsd;lfkjasdl;kfjaldks;jfl;kasdjflasjf");
-        databaseReference.child(id).setValue(complaint);
-        /////////////////////////////////////////////////////////////////////////////
-
-
     }
 
     protected void onStart(){
