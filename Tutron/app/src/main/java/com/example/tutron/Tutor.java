@@ -68,25 +68,42 @@ public class Tutor extends AppCompatActivity {
                     Toast.makeText(Tutor.this, "Failed. All fields must be filled in.", Toast.LENGTH_SHORT).show();
                 }
                 if(dataSaved){
-                    databaseReference.child("users").child(emailTemp).child("first name").setValue(firstNameTemp);
-                    databaseReference.child("users").child(emailTemp).child("last name").setValue(lastNameTemp);
-                    databaseReference.child("users").child(emailTemp).child("education").setValue(educationTemp);
-                    databaseReference.child("users").child(emailTemp).child("email").setValue(emailTemp);
-                    databaseReference.child("users").child(emailTemp).child("password").setValue(passwordTemp);
-                    databaseReference.child("users").child(emailTemp).child("language").setValue(languageTemp);
-                    databaseReference.child("users").child(emailTemp).child("description").setValue(descriptionTemp);
-                    databaseReference.child("users").child(emailTemp).child("type").setValue("Tutor");
-                    databaseReference.child("users").child(emailTemp).child("status").setValue("Active");
+                    //Check if the username has already existed.
+                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.hasChild(emailTemp)){
+                                Toast.makeText(Tutor.this, "This email has already existed! Please try again", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                databaseReference.child("users").child(emailTemp).child("first name").setValue(firstNameTemp);
+                                databaseReference.child("users").child(emailTemp).child("last name").setValue(lastNameTemp);
+                                databaseReference.child("users").child(emailTemp).child("education").setValue(educationTemp);
+                                databaseReference.child("users").child(emailTemp).child("email").setValue(emailTemp);
+                                databaseReference.child("users").child(emailTemp).child("password").setValue(passwordTemp);
+                                databaseReference.child("users").child(emailTemp).child("language").setValue(languageTemp);
+                                databaseReference.child("users").child(emailTemp).child("description").setValue(descriptionTemp);
+                                databaseReference.child("users").child(emailTemp).child("type").setValue("Tutor");
+                                databaseReference.child("users").child(emailTemp).child("status").setValue("Active");
 
-                    //database = FirebaseDatabase.getInstance();
-                    //reference = database.getReference("users");
-                    //HelperClass helperClass = new HelperClass(userNameTemp, passwordTemp, "Tutor");
-                    //reference.child(userNameTemp).setValue(helperClass);
+                                //database = FirebaseDatabase.getInstance();
+                                //reference = database.getReference("users");
+                                //HelperClass helperClass = new HelperClass(userNameTemp, passwordTemp, "Tutor");
+                                //reference.child(userNameTemp).setValue(helperClass);
 
-                    Toast.makeText(Tutor.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                    Intent register = new Intent(Tutor.this, MainActivity.class);
-                    startActivity(register);
-                    finish();
+                                Toast.makeText(Tutor.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                                Intent register = new Intent(Tutor.this, MainActivity.class);
+                                startActivity(register);
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
             }
         });

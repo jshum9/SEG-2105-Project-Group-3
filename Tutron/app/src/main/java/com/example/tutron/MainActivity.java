@@ -55,23 +55,24 @@ public class MainActivity extends AppCompatActivity {
                                 if (getPassword.equals(userPasswordTemp)){
                                     String role = snapshot.child(userNameTemp).child("type").getValue(String.class);
                                     if(role.equals("Tutor")){
-                                        String status = snapshot.child(userNameTemp).child("status").getValue(String.class);
-                                        if(status.equals("Active")){
-                                            Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(MainActivity.this, SignedIn.class);
-                                            intent.putExtra("role",role);
-                                            startActivity(intent);
-                                        } else if(status.equals("Suspend")) {
-                                            Toast.makeText(MainActivity.this, "Your account has been suspended!", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(MainActivity.this, TutorStatus.class);
-                                            startActivity(intent);
-                                            finish();
+                                        if(snapshot.child(userNameTemp).hasChild("status")){
+                                            String status = snapshot.child(userNameTemp).child("status").getValue(String.class);
+                                            if(status.equals("Active")){
+                                                Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(MainActivity.this, SignedIn.class);
+                                                intent.putExtra("role",role);
+                                                startActivity(intent);
+                                            } else if(status.equals("Suspend")) {
+                                                Toast.makeText(MainActivity.this, "Your account has been suspended!", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(MainActivity.this, TutorInfo.class);
+                                                startActivity(intent);
 
-                                        }else{
-                                            Toast.makeText(MainActivity.this, "Your account has been dismissed!", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(MainActivity.this, TutorStatus.class);
-                                            startActivity(intent);
-                                            finish();
+                                            }else{
+                                                Toast.makeText(MainActivity.this, "Your account has been dismissed!", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(MainActivity.this, TutorInfo.class);
+                                                startActivity(intent);
+                                        }
+
                                         }
                                     }
 
