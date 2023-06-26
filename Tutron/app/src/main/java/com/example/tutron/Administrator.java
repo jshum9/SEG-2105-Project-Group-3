@@ -50,7 +50,7 @@ public class Administrator extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Complaints");
         initDatePicker();
-        dateButton = findViewById(R.id.datePickerBtn);
+        //dateButton = findViewById(R.id.datePickerBtn);
         dateButton.setText(getTodayDate());
         onItemLongClick();
 
@@ -154,6 +154,7 @@ public class Administrator extends AppCompatActivity {
         final Button suspend = (Button) dialogView.findViewById(R.id.suspendBtn);
         final Button dismiss = (Button) dialogView.findViewById(R.id.dismissBtn);
         final Button back = (Button) dialogView.findViewById(R.id.backBtn);
+        final Button datePicker = (Button) dialogView.findViewById(R.id.datePickerBtn);
 
         //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
         final AlertDialog dialog = dialogBuilder.create();
