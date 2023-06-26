@@ -61,16 +61,23 @@ public class MainActivity extends AppCompatActivity {
                                             Intent intent = new Intent(MainActivity.this, SignedIn.class);
                                             intent.putExtra("role",role);
                                             startActivity(intent);
-                                        } else {
+                                        } else if(status.equals("Suspend")) {
+                                            Toast.makeText(MainActivity.this, "Your account has been suspended!", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(MainActivity.this, TutorStatus.class);
                                             startActivity(intent);
+                                            finish();
 
+                                        }else{
+                                            Toast.makeText(MainActivity.this, "Your account has been dismissed!", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(MainActivity.this, TutorStatus.class);
+                                            startActivity(intent);
+                                            finish();
                                         }
                                     }
 
-                                    else {
+                                    else  {
                                         Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(MainActivity.this, Administrator.class);
+                                        Intent intent = new Intent(MainActivity.this, SignedIn.class);
                                         intent.putExtra("role",role);
                                         startActivity(intent);
                                     }
