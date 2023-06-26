@@ -64,6 +64,163 @@ public class Administrator extends AppCompatActivity {
         });
     }
 
+    private void onItemLongClick() {
+        listViewComplaints.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Complaint complaint = complaints.get(position);
+                showSuspendOrDismissDialog(complaint.getId(), complaint.getComplaint(), complaint.getTutorEmail(), complaint.getStudentEmail());
+                //String selectedComplaint = complaint.getComplaint();
+                //Intent intent = new Intent(Administrator.this, ProcessComplaint.class);
+                //intent.putExtra()
+            }
+        });
+    }
+
+    private void showSuspendOrDismissDialog(String complaintId, String complaint, String tutor, String student){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_process_complaint, null);
+        dialogBuilder.setView(dialogView);
+
+        //final TextView complaintText = (TextView) dialogView.findViewById(R.id.textComplaint);
+        //final Spinner yearSpinner = (Spinner) dialogView.findViewById(R.id.yearSpinner);
+        //final Spinner monthSpinner = (Spinner) dialogView.findViewById(R.id.monthSpinner);
+        //final Spinner daySpinner = (Spinner) dialogView.findViewById(R.id.daySpinner);
+        final Button suspend = (Button) dialogView.findViewById(R.id.suspendBtn);
+        final Button dismiss = (Button) dialogView.findViewById(R.id.dismissBtn);
+        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
+        //final Button datePicker = (Button) dialogView.findViewById(R.id.datePickerBtn);
+
+        //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
+        final AlertDialog dialog = dialogBuilder.create();
+        dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student);
+        dialog.show();
+
+        //Suspension Button
+
+        suspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSuspensionOptionsDialog();
+            }
+        });
+
+        //Dismiss Button
+        //TODO: complete function so that admin can dismiss complaint
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //Back Button
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    private void showSuspensionOptionsDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_suspension, null);
+        dialogBuilder.setView(dialogView);
+        final AlertDialog dialog = dialogBuilder.create();
+        dialog.setMessage("Do you want to temporarily suspend or permanently suspend?");
+        dialog.show();
+
+        final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempBtn);
+        final Button permSuspend = (Button) dialogView.findViewById(R.id.permSuspendBtn);
+        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
+
+        tempSuspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTempSuspensionDialog();
+            }
+        });
+
+        //TODO: what happens when you click on permanent suspension
+        permSuspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    private void showTempSuspensionDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_temporary_suspension, null);
+        dialogBuilder.setView(dialogView);
+        final AlertDialog dialog = dialogBuilder.create();
+        dialog.setMessage("What day do you want the suspension to be over?");
+        dialog.show();
+
+        final Button selectDate = (Button) dialogView.findViewById(R.id.datePickerBtn);
+        final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempSuspendBtn);
+        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
+
+        //TODO: what happens when you want to select a date
+        selectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //TODO: what happens when you want to confirm temp suspension
+        tempSuspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    protected void onStart(){
+        super.onStart();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                complaints.clear();
+                for (DataSnapshot postSnapshot: snapshot.getChildren()){
+                    Complaint complaint = postSnapshot.getValue(Complaint.class);
+                    complaints.add(complaint);
+                }
+
+                ComplaintList adapter = new ComplaintList(Administrator.this, complaints);
+                listViewComplaints.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     /*private String getTodayDate(){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -128,163 +285,4 @@ public class Administrator extends AppCompatActivity {
         datePickerDialog.show();
     }
 */
-
-
-    private void onItemLongClick() {
-        listViewComplaints.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Complaint complaint = complaints.get(position);
-                showSuspendOrDismissDialog(complaint.getId(), complaint.getComplaint(), complaint.getTutorEmail(), complaint.getStudentEmail());
-                //String selectedComplaint = complaint.getComplaint();
-                //Intent intent = new Intent(Administrator.this, ProcessComplaint.class);
-                //intent.putExtra()
-            }
-        });
-    }
-
-    private void showSuspendOrDismissDialog(String complaintId, String complaint, String tutor, String student){
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_process_complaint, null);
-        dialogBuilder.setView(dialogView);
-
-        //final TextView complaintText = (TextView) dialogView.findViewById(R.id.textComplaint);
-        //final Spinner yearSpinner = (Spinner) dialogView.findViewById(R.id.yearSpinner);
-        //final Spinner monthSpinner = (Spinner) dialogView.findViewById(R.id.monthSpinner);
-        //final Spinner daySpinner = (Spinner) dialogView.findViewById(R.id.daySpinner);
-        final Button suspend = (Button) dialogView.findViewById(R.id.suspendBtn);
-        final Button dismiss = (Button) dialogView.findViewById(R.id.dismissBtn);
-        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
-        //final Button datePicker = (Button) dialogView.findViewById(R.id.datePickerBtn);
-
-        //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
-        final AlertDialog dialog = dialogBuilder.create();
-        dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student);
-        dialog.show();
-
-        //Suspension Button
-
-        suspend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSuspensionOptionsDialog();
-            }
-        });
-
-        //Dismiss Button
-        //TODO: complete function so that admin can dismiss complaint
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        //Back Button
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-    }
-
-    //TODO: complete this function
-    private void showSuspensionOptionsDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_suspension, null);
-        dialogBuilder.setView(dialogView);
-        final AlertDialog dialog = dialogBuilder.create();
-        dialog.show();
-
-        final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempBtn);
-        final Button permSuspend = (Button) dialogView.findViewById(R.id.permSuspendBtn);
-        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
-
-        tempSuspend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTempSuspensionDialog();
-            }
-        });
-
-        //TODO: what happens when you click on permanent suspension
-        permSuspend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-    }
-
-    private void showTempSuspensionDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_temporary_suspension, null);
-        dialogBuilder.setView(dialogView);
-        final AlertDialog dialog = dialogBuilder.create();
-        dialog.show();
-
-        final Button selectDate = (Button) dialogView.findViewById(R.id.datePickerBtn);
-        final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempSuspendBtn);
-        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
-
-        //TODO: what happens when you want to select a date
-        selectDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        //TODO: what happens when you want to confirm temp suspension
-        tempSuspend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-    }
-
-    protected void onStart(){
-        super.onStart();
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                complaints.clear();
-                for (DataSnapshot postSnapshot: snapshot.getChildren()){
-                    Complaint complaint = postSnapshot.getValue(Complaint.class);
-                    complaints.add(complaint);
-                }
-
-                ComplaintList adapter = new ComplaintList(Administrator.this, complaints);
-                listViewComplaints.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-
 }
