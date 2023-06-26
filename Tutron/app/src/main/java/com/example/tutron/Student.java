@@ -1,5 +1,6 @@
 package com.example.tutron;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class Student extends AppCompatActivity {
-    EditText userName,firstName,lastName,emailAddress,password,address,cardNumber,expirationDate,cvvNumber;
+    EditText firstName,lastName,emailAddress,password,address,cardNumber,expirationDate,cvvNumber;
     FirebaseDatabase database;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://seg-2105-group-project-f5fd7-default-rtdb.firebaseio.com/");
 
@@ -83,29 +84,48 @@ public class Student extends AppCompatActivity {
 
 
                 if (dataSaved) {
-                    //FLAG HERE FOR DELETED CODE
+                    //Check if the username has already exists in the database
+                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.hasChild(emailAddressTemp)){
+                                Toast.makeText(Student.this, "This email has already existed! Please try again", Toast.LENGTH_SHORT).show();
+                            }else{
 
-                    //Current implementation of data into database
-                    databaseReference.child("users").child(emailAddressTemp).child("first name").setValue(firstNameTemp);
-                    databaseReference.child("users").child(emailAddressTemp).child("last name").setValue(lastNameTemp);
-                    databaseReference.child("users").child(emailAddressTemp).child("email").setValue(emailAddressTemp);
-                    databaseReference.child("users").child(emailAddressTemp).child("password").setValue(passwordTemp);
-                    databaseReference.child("users").child(emailAddressTemp).child("address").setValue(addressTemp);
-                    databaseReference.child("users").child(emailAddressTemp).child("Credit Card Number").setValue(cardNumberTemp);
-                    databaseReference.child("users").child(emailAddressTemp).child("Expiration Date").setValue(expirationDateTemp);
-                    databaseReference.child("users").child(emailAddressTemp).child("cvv Number").setValue(cvvNumTemp);
-                    databaseReference.child("users").child(emailAddressTemp).child("type").setValue("Student");
 
-                    //Possible new implementation of data into database
-                    //String users = databaseReference.push().getKey();
-                    //StudentAccount student = new StudentAccount(firstNameTemp, lastNameTemp, emailAddressTemp, passwordTemp,
-                            //addressTemp, cardNumberTemp, expirationDateTemp, cvvNumTemp);
-                    //databaseReference.child(users).setValue(student);
+                                //FLAG HERE FOR DELETED CODE
 
-                     Toast.makeText(Student.this, "Register successful", Toast.LENGTH_SHORT).show();
-                     Intent register = new Intent(Student.this, MainActivity.class);
-                     startActivity(register);
-                     finish();
+                                //Current implementation of data into database
+                                databaseReference.child("users").child(emailAddressTemp).child("first name").setValue(firstNameTemp);
+                                databaseReference.child("users").child(emailAddressTemp).child("last name").setValue(lastNameTemp);
+                                databaseReference.child("users").child(emailAddressTemp).child("email").setValue(emailAddressTemp);
+                                databaseReference.child("users").child(emailAddressTemp).child("password").setValue(passwordTemp);
+                                databaseReference.child("users").child(emailAddressTemp).child("address").setValue(addressTemp);
+                                databaseReference.child("users").child(emailAddressTemp).child("Credit Card Number").setValue(cardNumberTemp);
+                                databaseReference.child("users").child(emailAddressTemp).child("Expiration Date").setValue(expirationDateTemp);
+                                databaseReference.child("users").child(emailAddressTemp).child("cvv Number").setValue(cvvNumTemp);
+                                databaseReference.child("users").child(emailAddressTemp).child("type").setValue("Student");
+
+                                //Possible new implementation of data into database
+                                //String users = databaseReference.push().getKey();
+                                //StudentAccount student = new StudentAccount(firstNameTemp, lastNameTemp, emailAddressTemp, passwordTemp,
+                                //addressTemp, cardNumberTemp, expirationDateTemp, cvvNumTemp);
+                                //databaseReference.child(users).setValue(student);
+
+                                Toast.makeText(Student.this, "Register successful", Toast.LENGTH_SHORT).show();
+                                Intent register = new Intent(Student.this, MainActivity.class);
+                                startActivity(register);
+                                finish();
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
             }
         });
