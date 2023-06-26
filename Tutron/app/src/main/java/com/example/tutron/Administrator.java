@@ -38,6 +38,8 @@ public class Administrator extends AppCompatActivity {
 
     //DatePickerDialog datePickerDialog;
     //Button dateButton;
+    Button pickDateBtn;
+    TextView selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +51,10 @@ public class Administrator extends AppCompatActivity {
         complaints = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Complaints");
-        //initDatePicker();
-        //dateButton = findViewById(R.id.datePickerBtn);
-        //dateButton.setText(getTodayDate());
+
+
         onItemLongClick();
+
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,12 +174,31 @@ public class Administrator extends AppCompatActivity {
         final Button selectDate = (Button) dialogView.findViewById(R.id.datePickerBtn);
         final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempSuspendBtn);
         final Button back = (Button) dialogView.findViewById(R.id.backBtn);
+        //pickDateBtn = findViewById(R.id.datePickerBtn);
+        TextView selectedDate = findViewById(R.id.selectedDate);
+
 
         //TODO: what happens when you want to select a date
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //dateButton = findViewById(R.id.datePickerBtn);
+                //dateButton.setText(getTodayDate());
+                //initDatePicker();
+                //openDatePicker(v);
+                final Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        Administrator.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                selectedDate.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                            }
+                        }, year, month, day);
+                datePickerDialog.show();
             }
         });
 
@@ -221,16 +242,32 @@ public class Administrator extends AppCompatActivity {
         });
     }
 
-    /*private String getTodayDate(){
+
+
+    //********************************************************************
+
+    /*private void showDateOptionsDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_temporary_suspension, null);
+        dialogBuilder.setView(dialogView);
+        final AlertDialog dialog = dialogBuilder.create();
+        dialog.setMessage("What day do you want the suspension to be over?");
+        dialog.show();
+    }
+
+    //TODO: getting the date rough work
+
+    private String getTodayDate(){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         month = month + 1;
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         return makeDateString(dayOfMonth, month, year);
-    }*/
+    }
 
-    /*private void initDatePicker() {
+    private void initDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
@@ -244,14 +281,16 @@ public class Administrator extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, dayOfMonth);
-    }*/
+        int style = AlertDialog.THEME_HOLO_LIGHT;
 
-    /*private String makeDateString(int day, int month, int year) {
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, dayOfMonth);
+    }
+
+    private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
-    }*/
+    }
 
-    /*private String getMonthFormat(int month){
+    private String getMonthFormat(int month){
         if(month == 1)
             return "JAN";
         if(month == 2)
@@ -278,11 +317,8 @@ public class Administrator extends AppCompatActivity {
             return "DEC";
         //DEFAULT CASE
         return "DEFUALT";
-    }*/
-
-/*
+    }
     public void openDatePicker(View view){
         datePickerDialog.show();
-    }
-*/
+    }*/
 }
