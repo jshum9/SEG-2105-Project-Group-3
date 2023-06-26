@@ -36,8 +36,8 @@ public class Administrator extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
 
-    DatePickerDialog datePickerDialog;
-    Button dateButton;
+    //DatePickerDialog datePickerDialog;
+    //Button dateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +49,9 @@ public class Administrator extends AppCompatActivity {
         complaints = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Complaints");
-        initDatePicker();
+        //initDatePicker();
         //dateButton = findViewById(R.id.datePickerBtn);
-        dateButton.setText(getTodayDate());
+        //dateButton.setText(getTodayDate());
         onItemLongClick();
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,16 +64,16 @@ public class Administrator extends AppCompatActivity {
         });
     }
 
-    private String getTodayDate(){
+    /*private String getTodayDate(){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         month = month + 1;
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         return makeDateString(dayOfMonth, month, year);
-    }
+    }*/
 
-    private void initDatePicker() {
+    /*private void initDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
@@ -88,13 +88,13 @@ public class Administrator extends AppCompatActivity {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
         datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, dayOfMonth);
-    }
+    }*/
 
-    private String makeDateString(int day, int month, int year) {
+    /*private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
-    }
+    }*/
 
-    private String getMonthFormat(int month){
+    /*private String getMonthFormat(int month){
         if(month == 1)
             return "JAN";
         if(month == 2)
@@ -121,11 +121,13 @@ public class Administrator extends AppCompatActivity {
             return "DEC";
         //DEFAULT CASE
         return "DEFUALT";
-    }
+    }*/
 
+/*
     public void openDatePicker(View view){
         datePickerDialog.show();
     }
+*/
 
 
     private void onItemLongClick() {
@@ -133,7 +135,7 @@ public class Administrator extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Complaint complaint = complaints.get(position);
-                showSuspendDismissDialog(complaint.getId(), complaint.getComplaint(), complaint.getTutorEmail(), complaint.getStudentEmail());
+                showSuspendOrDismissDialog(complaint.getId(), complaint.getComplaint(), complaint.getTutorEmail(), complaint.getStudentEmail());
                 //String selectedComplaint = complaint.getComplaint();
                 //Intent intent = new Intent(Administrator.this, ProcessComplaint.class);
                 //intent.putExtra()
@@ -141,7 +143,7 @@ public class Administrator extends AppCompatActivity {
         });
     }
 
-    private void showSuspendDismissDialog(String complaintId, String complaint, String tutor, String student){
+    private void showSuspendOrDismissDialog(String complaintId, String complaint, String tutor, String student){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_process_complaint, null);
@@ -154,21 +156,19 @@ public class Administrator extends AppCompatActivity {
         final Button suspend = (Button) dialogView.findViewById(R.id.suspendBtn);
         final Button dismiss = (Button) dialogView.findViewById(R.id.dismissBtn);
         final Button back = (Button) dialogView.findViewById(R.id.backBtn);
-        final Button datePicker = (Button) dialogView.findViewById(R.id.datePickerBtn);
+        //final Button datePicker = (Button) dialogView.findViewById(R.id.datePickerBtn);
 
         //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
         final AlertDialog dialog = dialogBuilder.create();
         dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student);
         dialog.show();
 
-        //TODO: figure out how to implement the spinners to select date
-
         //Suspension Button
-        //TODO: complete function so that admin can suspend tutor
+
         suspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showSuspensionOptionsDialog();
             }
         });
 
@@ -182,6 +182,78 @@ public class Administrator extends AppCompatActivity {
         });
 
         //Back Button
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    //TODO: complete this function
+    private void showSuspensionOptionsDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_suspension, null);
+        dialogBuilder.setView(dialogView);
+        final AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+
+        final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempBtn);
+        final Button permSuspend = (Button) dialogView.findViewById(R.id.permSuspendBtn);
+        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
+
+        tempSuspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTempSuspensionDialog();
+            }
+        });
+
+        //TODO: what happens when you click on permanent suspension
+        permSuspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    private void showTempSuspensionDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_temporary_suspension, null);
+        dialogBuilder.setView(dialogView);
+        final AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+
+        final Button selectDate = (Button) dialogView.findViewById(R.id.datePickerBtn);
+        final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempSuspendBtn);
+        final Button back = (Button) dialogView.findViewById(R.id.backBtn);
+
+        //TODO: what happens when you want to select a date
+        selectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //TODO: what happens when you want to confirm temp suspension
+        tempSuspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
