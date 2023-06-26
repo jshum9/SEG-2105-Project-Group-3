@@ -10,7 +10,7 @@
 
 
 
-    <androidx.cardview.widget.CardView
+   <!-- <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -22,7 +22,7 @@
         android:text="Complaint"
         android:textSize="24dp"
         android:textStyle="bold"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"/>-->
 
     <!--<androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -66,13 +66,13 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
-        <Spinner
+        <!--<Spinner
             android:id="@+id/yearSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,8 +91,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_weight="1"/>-->
+
+        <Button
+            android:id="@+id/datePickerBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_weight="1"
+            android:text="SELECT A DATE"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <Button
         android:layout_marginTop="32dp"

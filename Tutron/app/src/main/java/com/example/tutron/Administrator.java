@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Administrator extends AppCompatActivity {
@@ -31,6 +35,9 @@ public class Administrator extends AppCompatActivity {
     List<Complaint> complaints;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
+
+    DatePickerDialog datePickerDialog;
+    Button dateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +49,9 @@ public class Administrator extends AppCompatActivity {
         complaints = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Complaints");
-
+        initDatePicker();
+        dateButton = findViewById(R.id.datePickerBtn);
+        dateButton.setText(getTodayDate());
         onItemLongClick();
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +63,70 @@ public class Administrator extends AppCompatActivity {
             }
         });
     }
+
+    private String getTodayDate(){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        month = month + 1;
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        return makeDateString(dayOfMonth, month, year);
+    }
+
+    private void initDatePicker() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String date = makeDateString(dayOfMonth, month, year);
+            }
+        };
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, dayOfMonth);
+    }
+
+    private String makeDateString(int day, int month, int year) {
+        return getMonthFormat(month) + " " + day + " " + year;
+    }
+
+    private String getMonthFormat(int month){
+        if(month == 1)
+            return "JAN";
+        if(month == 2)
+            return "FEB";
+        if(month == 3)
+            return "MAR";
+        if(month == 4)
+            return "APR";
+        if(month == 5)
+            return "MAY";
+        if(month == 6)
+            return "JUN";
+        if(month == 7)
+            return "JUL";
+        if(month == 8)
+            return "AUG";
+        if(month == 9)
+            return "SEP";
+        if(month == 10)
+            return "OCT";
+        if(month == 11)
+            return "NOV";
+        if(month == 12)
+            return "DEC";
+        //DEFAULT CASE
+        return "DEFUALT";
+    }
+
+    public void openDatePicker(View view){
+        datePickerDialog.show();
+    }
+
 
     private void onItemLongClick() {
         listViewComplaints.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,9 +148,9 @@ public class Administrator extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         //final TextView complaintText = (TextView) dialogView.findViewById(R.id.textComplaint);
-        final Spinner yearSpinner = (Spinner) dialogView.findViewById(R.id.yearSpinner);
-        final Spinner monthSpinner = (Spinner) dialogView.findViewById(R.id.monthSpinner);
-        final Spinner daySpinner = (Spinner) dialogView.findViewById(R.id.daySpinner);
+        //final Spinner yearSpinner = (Spinner) dialogView.findViewById(R.id.yearSpinner);
+        //final Spinner monthSpinner = (Spinner) dialogView.findViewById(R.id.monthSpinner);
+        //final Spinner daySpinner = (Spinner) dialogView.findViewById(R.id.daySpinner);
         final Button suspend = (Button) dialogView.findViewById(R.id.suspendBtn);
         final Button dismiss = (Button) dialogView.findViewById(R.id.dismissBtn);
         final Button back = (Button) dialogView.findViewById(R.id.backBtn);
