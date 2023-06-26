@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,8 +39,10 @@ public class Administrator extends AppCompatActivity {
 
     //DatePickerDialog datePickerDialog;
     //Button dateButton;
-    Button pickDateBtn;
-    TextView selectedDate;
+    //Button pickDateBtn;
+    //TextView selectedDateTV;
+    Calendar selectedDate;
+    TextView dateSelection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,6 @@ public class Administrator extends AppCompatActivity {
         complaints = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Complaints");
-
 
         onItemLongClick();
 
@@ -175,8 +177,9 @@ public class Administrator extends AppCompatActivity {
         final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempSuspendBtn);
         final Button back = (Button) dialogView.findViewById(R.id.backBtn);
         //pickDateBtn = findViewById(R.id.datePickerBtn);
-        TextView selectedDate = findViewById(R.id.selectedDate);
-
+        //*****************TextView selectedDate = findViewById(R.id.selectedDate);
+        selectedDate = Calendar.getInstance();
+        TextView dateSelection = (TextView) findViewById(R.id.selectedDateTV);
 
         //TODO: what happens when you want to select a date
         selectDate.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +189,7 @@ public class Administrator extends AppCompatActivity {
                 //dateButton.setText(getTodayDate());
                 //initDatePicker();
                 //openDatePicker(v);
-                final Calendar calendar = Calendar.getInstance();
+                /*final Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -195,20 +198,24 @@ public class Administrator extends AppCompatActivity {
                         Administrator.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                selectedDate.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                                //selectedDate.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                             }
                         }, year, month, day);
-                datePickerDialog.show();
+                datePickerDialog.show();*/
+                showDatePicker();
             }
         });
 
         //TODO: what happens when you want to confirm temp suspension
-        tempSuspend.setOnClickListener(new View.OnClickListener() {
-            @Override
+        /*tempSuspend.setOnClickListener(new View.OnClickListener() {
+            *//*@Override
             public void onClick(View v) {
-
-            }
-        });
+                String dateText = selectedDate.get(Calendar.DAY_OF_MONTH+"/"+
+                        (selectedDate.get(Calendar.MONTH)+1)+"/"+
+                        selectedDate.get(Calendar.YEAR));
+                dateSelection.setText("Selected Date: " + dateText);
+            }*//*
+        });*/
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,6 +223,20 @@ public class Administrator extends AppCompatActivity {
                 dialog.cancel();
             }
         });
+    }
+
+    private void showDatePicker() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    selectedDate.set(Calendar.YEAR, year);
+                    selectedDate.set(Calendar.MONTH, monthOfYear);
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                //String dateText = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                //dateSelection.setText("Selected Date: " + dateText);
+            }
+        }, selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 
     protected void onStart(){
@@ -321,4 +342,7 @@ public class Administrator extends AppCompatActivity {
     public void openDatePicker(View view){
         datePickerDialog.show();
     }*/
+
+
+
 }

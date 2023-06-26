@@ -26,7 +26,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
-        android:id="@+id/selectedDate"
+        android:id="@+id/selectedDateTV"
         android:layout_width="221dp"
         android:layout_height="wrap_content"
         android:gravity="center"
