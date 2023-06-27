@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Get the user name and password
-                String userNameTemp = userName.getText().toString().trim();
+                //Replacing "." with "," since we are using the email as a key in our database
+                String userNameTemp = userName.getText().toString().trim().replace(".", ",");
                 String userPasswordTemp = userPassword.getText().toString().trim();
                 if(!TextUtils.isEmpty(userNameTemp) && !TextUtils.isEmpty(userPasswordTemp) ){
                     //Something needs to be done here to tell the user is a student or a tutor.

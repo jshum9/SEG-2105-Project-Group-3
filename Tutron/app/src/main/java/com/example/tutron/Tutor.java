@@ -26,6 +26,7 @@ public class Tutor extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor);
 
@@ -54,7 +55,8 @@ public class Tutor extends AppCompatActivity {
                 String firstNameTemp = firstName.getText().toString().trim();
                 String lastNameTemp = lastName.getText().toString().trim();
                 String educationTemp = educationLevel.getText().toString().trim();
-                String emailTemp = emailAddress.getText().toString().trim();
+                //Replacing "." with "," since we are using the email as a key
+                String emailTemp = emailAddress.getText().toString().trim().replace(".", ",");
                 String passwordTemp = password.getText().toString().trim();
                 String languageTemp = language.getText().toString().trim();
                 String descriptionTemp = description.getText().toString().trim();

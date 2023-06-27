@@ -10,44 +10,6 @@
 
 
 
-   <!-- <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="32dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Complaint"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp"/>-->
-
-    <!--<androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="32dp">
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="16dp">
-
-            <TextView
-                android:id="@+id/textComplaint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="bla bla bla....."/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.cardview.widget.CardView>-->
-
-
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,42 +28,7 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <!--<androidx.appcompat.widget.LinearLayoutCompat
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-
-        &lt;!&ndash;<Spinner
-            android:id="@+id/yearSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_weight="1"/>
-
-        <Spinner
-            android:id="@+id/monthSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_weight="1"/>
-
-        <Spinner
-            android:id="@+id/daySpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_weight="1"/>&ndash;&gt;
-
-        <Button
-            android:id="@+id/datePickerBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_weight="1"
-            android:text="SELECT A DATE"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>-->
 
     <Button
         android:layout_marginTop="32dp"

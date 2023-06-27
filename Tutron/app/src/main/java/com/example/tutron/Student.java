@@ -57,10 +57,10 @@ public class Student extends AppCompatActivity {
             public void onClick(View v) {
                 String firstNameTemp = firstName.getText().toString().trim();
                 String lastNameTemp = lastName.getText().toString().trim();
-                String emailAddressTemp = emailAddress.getText().toString().trim();
+                //Replacing "." with "," since we are using the email as a key
+                String emailAddressTemp = emailAddress.getText().toString().trim().replace('.', ',');
                 String passwordTemp = password.getText().toString().trim();
                 String addressTemp = address.getText().toString().trim();
-
                 String cardNumberTemp = cardNumber.getText().toString().trim();
                 String expirationDateTemp = expirationDate.getText().toString().trim();
                 String cvvNumTemp = cvvNumber.getText().toString().trim();

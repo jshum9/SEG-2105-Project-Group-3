@@ -13,11 +13,6 @@ public class Complaint {
         this.tutorEmail = tutorEmail;
     }
 
-    public Complaint(String complaint, String studentEmail, String tutorEmail){
-        this.complaint = complaint;
-        this.studentEmail = studentEmail;
-        this.tutorEmail = tutorEmail;
-    }
 
     public void setId(String id){ this.id = id;}
 

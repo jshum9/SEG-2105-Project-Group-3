@@ -98,7 +98,7 @@ public class Administrator extends AppCompatActivity {
 
         //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
         final AlertDialog dialog = dialogBuilder.create();
-        dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student);
+        dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student + complaintId);
         dialog.show();
 
         //Suspension Button
@@ -115,7 +115,8 @@ public class Administrator extends AppCompatActivity {
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                databaseReference.child(complaintId).removeValue();
+                dialog.dismiss();
             }
         });
 
