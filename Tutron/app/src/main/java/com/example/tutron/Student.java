@@ -85,7 +85,7 @@ public class Student extends AppCompatActivity {
 
                 if (dataSaved) {
                     //Check if the username has already exists in the database
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.hasChild(emailAddressTemp)){
@@ -96,21 +96,21 @@ public class Student extends AppCompatActivity {
                                 //FLAG HERE FOR DELETED CODE
 
                                 //Current implementation of data into database
-                                databaseReference.child("users").child(emailAddressTemp).child("first name").setValue(firstNameTemp);
-                                databaseReference.child("users").child(emailAddressTemp).child("last name").setValue(lastNameTemp);
-                                databaseReference.child("users").child(emailAddressTemp).child("email").setValue(emailAddressTemp);
-                                databaseReference.child("users").child(emailAddressTemp).child("password").setValue(passwordTemp);
-                                databaseReference.child("users").child(emailAddressTemp).child("address").setValue(addressTemp);
-                                databaseReference.child("users").child(emailAddressTemp).child("Credit Card Number").setValue(cardNumberTemp);
-                                databaseReference.child("users").child(emailAddressTemp).child("Expiration Date").setValue(expirationDateTemp);
-                                databaseReference.child("users").child(emailAddressTemp).child("cvv Number").setValue(cvvNumTemp);
-                                databaseReference.child("users").child(emailAddressTemp).child("type").setValue("Student");
+                                databaseReference.child("Users").child(emailAddressTemp).child("first name").setValue(firstNameTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("last name").setValue(lastNameTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("email").setValue(emailAddressTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("password").setValue(passwordTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("address").setValue(addressTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("Credit Card Number").setValue(cardNumberTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("Expiration Date").setValue(expirationDateTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("cvv Number").setValue(cvvNumTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("type").setValue("Student");
 
                                 //Possible new implementation of data into database
-                                //String users = databaseReference.push().getKey();
+                                //String Users = databaseReference.push().getKey();
                                 //StudentAccount student = new StudentAccount(firstNameTemp, lastNameTemp, emailAddressTemp, passwordTemp,
                                 //addressTemp, cardNumberTemp, expirationDateTemp, cvvNumTemp);
-                                //databaseReference.child(users).setValue(student);
+                                //databaseReference.child(Users).setValue(student);
 
                                 Toast.makeText(Student.this, "Register successful", Toast.LENGTH_SHORT).show();
                                 Intent register = new Intent(Student.this, MainActivity.class);
