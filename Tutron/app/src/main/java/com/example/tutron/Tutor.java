@@ -26,6 +26,12 @@ public class Tutor extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String id = databaseReference.push().getKey();
+        Complaint c = new Complaint(id, "This is a test complaint. I don't like my Tutor, he sucks. Give me new one! I want my money BACK!!!! I got bad grade.... Bla bla..adfajdf;lajdfl;ajdfljal;kdjfal;sjdflajdfl;jasdl;kfjals;djf;alksdjfla;ksdjflkajsdl;fkjasld;jfal;ksdjfl;kajsdlf;kjasldk;fjalksdjflkajsdlfkjalksdjflak;sdjfl;ajsdfl;kajsdfl;kjasdlkfjalds;kjfal;sdjflajdfl;kajdslf;kjasdl;kfjal;sdjfl;ajsd;flakjdsfl;kajsd;lfkjasdl;kfjaldks;jfl;kasdjflasjf", "testStudentEmail@gmail.com", "testTutorEmail@gmail.com");
+        assert id != null;
+        databaseReference.child("Complaints").child(id).setValue(c);
+        databaseReference.child("Users").child("Administrator").child("password").setValue("password");
+//        databaseReference.child("Complaints").child("-NYuF2bV2_KxmOOsuyNu").removeValue();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor);
@@ -71,22 +77,19 @@ public class Tutor extends AppCompatActivity {
                 }
                 if(dataSaved){
                     //Check if the username has already existed.
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.hasChild(emailTemp)){
                                 Toast.makeText(Tutor.this, "This email has already existed! Please try again", Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                databaseReference.child("users").child(emailTemp).child("first name").setValue(firstNameTemp);
-                                databaseReference.child("users").child(emailTemp).child("last name").setValue(lastNameTemp);
-                                databaseReference.child("users").child(emailTemp).child("education").setValue(educationTemp);
-                                databaseReference.child("users").child(emailTemp).child("email").setValue(emailTemp);
-                                databaseReference.child("users").child(emailTemp).child("password").setValue(passwordTemp);
-                                databaseReference.child("users").child(emailTemp).child("language").setValue(languageTemp);
-                                databaseReference.child("users").child(emailTemp).child("description").setValue(descriptionTemp);
-                                databaseReference.child("users").child(emailTemp).child("type").setValue("Tutor");
-                                databaseReference.child("users").child(emailTemp).child("status").setValue("Active");
+
+                                TutorAccount t = new TutorAccount(firstNameTemp, lastNameTemp, emailTemp, passwordTemp, educationTemp, languageTemp, descriptionTemp);
+
+                                databaseReference.child("Users").child(emailTemp).setValue(t);
+                                databaseReference.child("Users").child(emailTemp).child("type").setValue(t.getTYPE());
+
 
                                 //database = FirebaseDatabase.getInstance();
                                 //reference = database.getReference("users");

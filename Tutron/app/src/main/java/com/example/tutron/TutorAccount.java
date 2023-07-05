@@ -1,7 +1,13 @@
 package com.example.tutron;
 
+import java.util.Date;
+
 public class TutorAccount extends User{
-    private String educationLevel, nativeLanguage,  description;
+
+
+    static final private String TYPE = "TUTOR";
+    private String  educationLevel, nativeLanguage,  description;
+    private TutorSuspension suspension;
 
     public TutorAccount(){}
 
@@ -11,5 +17,42 @@ public class TutorAccount extends User{
         this.educationLevel = educationLevel;
         this.nativeLanguage = nativeLanguage;
         this.description = description;
+        this.suspension = new TutorSuspension(false, false, null);
+    }
+
+    public String getEducationLevel() {
+        return educationLevel;
+    }
+
+    public void setEducationLevel(String educationLevel) {
+        this.educationLevel = educationLevel;
+    }
+
+    public String getNativeLanguage() {
+        return nativeLanguage;
+    }
+
+    public void setNativeLanguage(String nativeLanguage) {
+        this.nativeLanguage = nativeLanguage;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public TutorSuspension getSuspension() {
+        return suspension;
+    }
+
+    public void setSuspension(TutorSuspension suspension) {
+        this.suspension = suspension;
+    }
+
+    public static String getTYPE() {
+        return TYPE;
     }
 }

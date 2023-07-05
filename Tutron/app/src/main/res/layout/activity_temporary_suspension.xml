@@ -25,22 +25,10 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <TextView
-        android:id="@+id/selectedDateTV"
-        android:layout_width="221dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Selected Date"
-        android:textSize="24sp" />
 
 
 
-    <Button
-        android:layout_marginTop="32dp"
-        android:id="@+id/tempSuspendBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Temporarily Suspend"/>
+
 
     <Button
         android:layout_marginTop="32dp"

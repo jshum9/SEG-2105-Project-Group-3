@@ -20,6 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class MainActivity extends AppCompatActivity {
     EditText userName,userPassword;
     Button loginBtn,registerBtn;
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://seg-2105-group-project-f5fd7-default-rtdb.firebaseio.com/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -46,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     //Something needs to be done here to tell the user is a student or a tutor.
                     //Code needed
 
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             //check if user name is in database
@@ -55,24 +60,50 @@ public class MainActivity extends AppCompatActivity {
                                 String getPassword = snapshot.child(userNameTemp).child("password").getValue(String.class);
                                 if (getPassword.equals(userPasswordTemp)){
                                     String role = snapshot.child(userNameTemp).child("type").getValue(String.class);
-                                    if(role.equals("Tutor")){
-                                        if(snapshot.child(userNameTemp).hasChild("status")){
-                                            String status = snapshot.child(userNameTemp).child("status").getValue(String.class);
-                                            if(status.equals("Active")){
+                                    if(role.equals("TUTOR")){
+                                        if(snapshot.child(userNameTemp).hasChild("suspension")){
+                                            boolean status = snapshot.child(userNameTemp).child("suspension").child("isSuspended").getValue(boolean.class);
+                                            if(status == false){
                                                 Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(MainActivity.this, SignedIn.class);
                                                 intent.putExtra("role",role);
                                                 startActivity(intent);
-                                            } else if(status.equals("Suspend")) {
-                                                Toast.makeText(MainActivity.this, "Your account has been suspended!", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(MainActivity.this, TutorInfo.class);
-                                                startActivity(intent);
+                                            } else {
+                                                if (snapshot.child(userNameTemp).child("suspension").hasChild("permanent") && snapshot.child(userNameTemp).child("suspension").child("permanent").getValue(boolean.class) == true){
+                                                    Intent intent = new Intent(MainActivity.this, TutorInfo.class);
+                                                    String suspensionType = "Permanent";
+                                                    intent.putExtra("suspensionTime", suspensionType);
+                                                    startActivity(intent);
+                                                }
 
-                                            }else{
-                                                Toast.makeText(MainActivity.this, "Your account has been dismissed!", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(MainActivity.this, TutorInfo.class);
-                                                startActivity(intent);
-                                        }
+                                                else{
+                                                    Date suspensionDate = new Date(snapshot.child(userNameTemp).child("suspension").child("date").child("year").getValue(int.class), snapshot.child(userNameTemp).child("suspension").child("date").child("month").getValue(int.class), snapshot.child(userNameTemp).child("suspension").child("date").child("day").getValue(int.class));
+                                                    Calendar cal = Calendar.getInstance();
+                                                    Date today = new Date(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+
+                                                    if (suspensionDate.isGreaterThen(today)){
+                                                        Intent intent = new Intent(MainActivity.this, TutorInfo.class);
+                                                        String suspensionType = "You may log back in on: " + suspensionDate.toString();
+                                                        intent.putExtra("suspensionTime", suspensionType);
+                                                        startActivity(intent);
+                                                    }
+
+                                                    else{
+
+                                                        databaseReference.child("Users").child(userNameTemp).child("suspension").child("isSuspended").setValue(false);
+                                                        Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(MainActivity.this, SignedIn.class);
+                                                        intent.putExtra("role",role);
+                                                        startActivity(intent);
+                                                    }
+
+
+
+
+
+                                                }
+
+                                            }
 
                                         }
                                     }
@@ -86,11 +117,11 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
                                 else{
-                                    Toast.makeText(MainActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "Wrong user name or password", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             else{
-                                Toast.makeText(MainActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Wrong user name or password", Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override

@@ -16,17 +16,18 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class Administrator extends AppCompatActivity {
@@ -98,7 +99,7 @@ public class Administrator extends AppCompatActivity {
 
         //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
         final AlertDialog dialog = dialogBuilder.create();
-        dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student + complaintId);
+        dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student);
         dialog.show();
 
         //Suspension Button
@@ -106,7 +107,8 @@ public class Administrator extends AppCompatActivity {
         suspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSuspensionOptionsDialog();
+                showSuspensionOptionsDialog(tutor, complaintId);
+                dialog.dismiss();
             }
         });
 
@@ -129,7 +131,7 @@ public class Administrator extends AppCompatActivity {
         });
     }
 
-    private void showSuspensionOptionsDialog() {
+    private void showSuspensionOptionsDialog(String tutor, String complaintId ) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_suspension, null);
@@ -145,15 +147,22 @@ public class Administrator extends AppCompatActivity {
         tempSuspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTempSuspensionDialog();
+                showTempSuspensionDialog(tutor, complaintId);
+                dialog.dismiss();
             }
         });
 
         //TODO: what happens when you click on permanent suspension
         permSuspend.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                databaseReference.getParent().child("Users").child(tutor.replace('.', ',')).child("suspension").child("isSuspended").setValue(true);
+                databaseReference.getParent().child("Users").child(tutor.replace('.', ',')).child("suspension").child("permanent").setValue(true);
 
+                //getting rid of all complaints with same tutor
+                removeEntriesWithCommonChild("tutorEmail", tutor);
+                dialog.dismiss();
             }
         });
 
@@ -165,7 +174,7 @@ public class Administrator extends AppCompatActivity {
         });
     }
 
-    private void showTempSuspensionDialog() {
+    private void showTempSuspensionDialog(String tutor, String complaintId) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_temporary_suspension, null);
@@ -175,12 +184,10 @@ public class Administrator extends AppCompatActivity {
         dialog.show();
 
         final Button selectDate = (Button) dialogView.findViewById(R.id.datePickerBtn);
-        final Button tempSuspend = (Button) dialogView.findViewById(R.id.tempSuspendBtn);
         final Button back = (Button) dialogView.findViewById(R.id.backBtn);
         //pickDateBtn = findViewById(R.id.datePickerBtn);
         //*****************TextView selectedDate = findViewById(R.id.selectedDate);
         selectedDate = Calendar.getInstance();
-        TextView dateSelection = (TextView) findViewById(R.id.selectedDateTV);
 
         //TODO: what happens when you want to select a date
         selectDate.setOnClickListener(new View.OnClickListener() {
@@ -203,13 +210,14 @@ public class Administrator extends AppCompatActivity {
                             }
                         }, year, month, day);
                 datePickerDialog.show();*/
-                showDatePicker();
+                showDatePicker(tutor, complaintId);
+                dialog.dismiss();
             }
         });
 
         //TODO: what happens when you want to confirm temp suspension
         /*tempSuspend.setOnClickListener(new View.OnClickListener() {
-            *//*@Override
+         *//*@Override
             public void onClick(View v) {
                 String dateText = selectedDate.get(Calendar.DAY_OF_MONTH+"/"+
                         (selectedDate.get(Calendar.MONTH)+1)+"/"+
@@ -226,15 +234,18 @@ public class Administrator extends AppCompatActivity {
         });
     }
 
-    private void showDatePicker() {
+    private void showDatePicker(String tutor, String complaintId) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    selectedDate.set(Calendar.YEAR, year);
-                    selectedDate.set(Calendar.MONTH, monthOfYear);
-                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                //String dateText = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                //dateSelection.setText("Selected Date: " + dateText);
+                selectedDate.set(Calendar.YEAR, year);
+                selectedDate.set(Calendar.MONTH, monthOfYear);
+                selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                Date suspensionEndDate = new Date(year, monthOfYear + 1, dayOfMonth);
+
+                databaseReference.getParent().child("Users").child(tutor.replace('.', ',')).child("suspension").child("date").setValue(suspensionEndDate);
+                databaseReference.getParent().child("Users").child(tutor.replace('.', ',')).child("suspension").child("isSuspended").setValue(true);
+                databaseReference.child(complaintId).removeValue();
             }
         }, selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
@@ -263,6 +274,27 @@ public class Administrator extends AppCompatActivity {
             }
         });
     }
+
+    private void removeEntriesWithCommonChild(String childName, String childValue) {
+        // Create a query to find all entries with the common child and the specified value
+        Query query = databaseReference.orderByChild(childName).equalTo(childValue);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot entrySnapshot : dataSnapshot.getChildren()) {
+                    entrySnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors if necessary
+            }
+        });
+    }
+
+
 
 
 
