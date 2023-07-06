@@ -65,7 +65,7 @@ public class Tutor extends AppCompatActivity {
                 String emailTemp = emailAddress.getText().toString().trim().replace(".", ",");
                 String passwordTemp = password.getText().toString().trim();
                 String languageTemp = language.getText().toString().trim();
-                String descriptionTemp = description.getText().toString().trim();
+                String descriptionTemp = description.getText().toString();
                 Boolean dataSaved = false;
 
                 if (!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp)
