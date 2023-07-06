@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Tutron"
         tools:targetApi="31">
         <activity
+            android:name=".TutorProfile"
+            android:exported="false" />
+        <activity
             android:name=".TutorInfo"
             android:exported="false" />
         <activity

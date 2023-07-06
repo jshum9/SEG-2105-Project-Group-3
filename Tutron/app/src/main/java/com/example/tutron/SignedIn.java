@@ -36,6 +36,10 @@ public class SignedIn extends AppCompatActivity {
                     startActivity(adminIntent);
                     finish();
                 }
+                if(role.equals("Tutor")){
+                    Intent tutorIntent = new Intent(SignedIn.this, TutorProfile.class);
+
+                }
             }
         });
 
