@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import android.widget.Toast;
 
 public class SignedIn extends AppCompatActivity {
     Button continueBtn,logOffBtn;
@@ -39,11 +37,16 @@ public class SignedIn extends AppCompatActivity {
                     startActivity(adminIntent);
                 }
                 //If it's tutor, go to tutor page.
-                if(role.equals("TUTOR")){
-                    Intent tutorIntent = new Intent(SignedIn.this, TutorProfile.class);
-                    tutorIntent.putExtra("emailAddress",emailAddress);
+                else if(role.equals("TUTOR")){
+                    Intent tutorIntent = new Intent(SignedIn.this, TutorHomePage.class);
+                    tutorIntent.putExtra("emailAddress", emailAddress);
                     startActivity(tutorIntent);
                 }
+
+                else {
+                    Toast.makeText(SignedIn.this, "NOPE", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

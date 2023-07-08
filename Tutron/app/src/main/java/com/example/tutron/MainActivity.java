@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                                                         databaseReference.child("Users").child(userNameTemp).child("suspension").child("isSuspended").setValue(false);
                                                         Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(MainActivity.this, SignedIn.class);
-                                                        intent.putExtra("role",role);
+                                                        intent.putExtra("type",role);
                                                         startActivity(intent);
                                                     }
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                                     else  {
                                         Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(MainActivity.this, SignedIn.class);
-                                        intent.putExtra("role",role);
+                                        intent.putExtra("type",role);
                                         startActivity(intent);
                                     }
 

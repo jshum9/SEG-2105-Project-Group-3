@@ -215,17 +215,6 @@ public class Administrator extends AppCompatActivity {
             }
         });
 
-        //TODO: what happens when you want to confirm temp suspension
-        /*tempSuspend.setOnClickListener(new View.OnClickListener() {
-         *//*@Override
-            public void onClick(View v) {
-                String dateText = selectedDate.get(Calendar.DAY_OF_MONTH+"/"+
-                        (selectedDate.get(Calendar.MONTH)+1)+"/"+
-                        selectedDate.get(Calendar.YEAR));
-                dateSelection.setText("Selected Date: " + dateText);
-            }*//*
-        });*/
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

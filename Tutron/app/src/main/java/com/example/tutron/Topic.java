@@ -7,6 +7,8 @@ public class Topic {
 
     private boolean isOffered;
 
+    public Topic(){}
+
     public Topic(String name, int yearsOfExperience, String description) {
         this.name = name;
         this.yearsOfExperience = yearsOfExperience;
