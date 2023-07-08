@@ -28,6 +28,14 @@ public class Topic {
         this.yearsOfExperience = yearsOfExperience;
     }
 
+    public void setIsOffered(boolean offered) {
+        this.isOffered = offered;
+    }
+
+    public boolean getIsOffered(){
+        return isOffered;
+    }
+
     public int getYearsOfExperience() {
         return yearsOfExperience;
     }
@@ -39,5 +47,4 @@ public class Topic {
     public String getName() {
         return name;
     }
-
 }

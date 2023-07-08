@@ -18,58 +18,56 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TutorHomePage extends AppCompatActivity {
+public class TutorTopicManagement extends AppCompatActivity {
 
-    Button logOffBtn;
+    Button backBtn;
 
-    //TODO: what happens when we click on editProfileBtn
-    Button editProfileBtn;
+    Button createTopicBtn;
 
-    Button addTopicBtn;
+
     ListView listViewTopics;
 
 
     FirebaseDatabase database;
     DatabaseReference databaseReference;
-
     List<Topic> topics;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutor_homepage);
+        setContentView(R.layout.activity_tutor_topic_management);
 
         Intent intentRole = getIntent();
         String emailAddress = intentRole.getStringExtra("emailAddress");
 
-        logOffBtn = findViewById(R.id.logOffBtn);
-        addTopicBtn = findViewById(R.id.addTopicBtn);
+        backBtn = findViewById(R.id.backBtn);
+        createTopicBtn = findViewById(R.id.addTopicBtn);
 
         listViewTopics = findViewById(R.id.listViewTopics);
         topics = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users/" + emailAddress + "/Topics");
 
-        logOffBtn.setOnClickListener(new View.OnClickListener() {
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backIntent = new Intent(TutorHomePage.this, MainActivity.class);
+                Intent backIntent = new Intent(TutorTopicManagement.this, TutorHomePage.class);
+                backIntent.putExtra("emailAddress", emailAddress);
                 startActivity(backIntent);
                 finish();
             }
         });
 
-        addTopicBtn.setOnClickListener(new View.OnClickListener(){
+        createTopicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addTopic = new Intent(TutorHomePage.this, TutorTopicManagement.class);
-                addTopic.putExtra("emailAddress", emailAddress);
-                startActivity(addTopic);
+                Intent createTopic = new Intent(TutorTopicManagement.this, TutorCreateTopic.class);
+                createTopic.putExtra("emailAddress", emailAddress);
+                startActivity(createTopic);
                 finish();
             }
         });
-
 
     }
 
@@ -82,12 +80,13 @@ public class TutorHomePage extends AppCompatActivity {
                 topics.clear();
                 for (DataSnapshot postSnapshot: snapshot.getChildren()){
                     Topic topic = postSnapshot.getValue(Topic.class);
-                    if (topic.getIsOffered()){
+                    if (!topic.getIsOffered()){
                         topics.add(topic);
                     }
+
                 }
 
-                TopicList adapter = new TopicList(TutorHomePage.this, topics);
+                TopicList adapter = new TopicList(TutorTopicManagement.this, topics);
                 listViewTopics.setAdapter(adapter);
 
             }

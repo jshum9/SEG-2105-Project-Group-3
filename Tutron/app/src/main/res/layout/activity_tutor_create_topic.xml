@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    tools:context=".TutorCreateTopic"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_marginBottom="16dp"/>
 
         <EditText
             android:id="@+id/topicName"
@@ -15,7 +25,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:padding="10dp"
-            android:text="Topic Name: "
+            android:hint="Topic Name: "
             android:inputType="text"/>
 
 
@@ -25,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:padding="10dp"
-            android:text="Years of Experience: "
+            android:hint="Years of Experience: "
             android:inputType="number"/>
 
 
@@ -35,7 +45,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:padding="10dp"
-            android:text="Experience Description: "
+            android:hint="Experience Description: "
             android:maxLength="600"
             android:inputType="text"/>
 
@@ -47,4 +57,6 @@
             android:layout_marginTop="16dp"/>
 
     </LinearLayout>
-</ScrollView>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
