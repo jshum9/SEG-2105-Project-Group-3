@@ -25,8 +25,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:padding="10dp"
-            android:hint="Topic Name: "
-            android:inputType="text"/>
+            android:hint="Topic Name: "/>
 
 
         <EditText
@@ -46,8 +45,7 @@
             android:textSize="16sp"
             android:padding="10dp"
             android:hint="Experience Description: "
-            android:maxLength="600"
-            android:inputType="text"/>
+            android:maxLength="600"/>
 
         <Button
             android:id="@+id/saveBtn"

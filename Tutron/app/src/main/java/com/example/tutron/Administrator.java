@@ -99,7 +99,7 @@ public class Administrator extends AppCompatActivity {
 
         //dialogBuilder.setMessage(complaint).setMessage(tutor).setMessage(student);
         final AlertDialog dialog = dialogBuilder.create();
-        dialog.setMessage("Complaint: " + complaint + "\nTutor: " + tutor + "\nStudent: " + student);
+        dialog.setMessage("Complaint: " + complaint + "\n\nTutor: " + tutor + "\nStudent: " + student);
         dialog.show();
 
         //Suspension Button

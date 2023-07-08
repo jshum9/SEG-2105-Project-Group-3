@@ -31,7 +31,7 @@ public class Tutor extends AppCompatActivity {
         Complaint a = new Complaint(id, "This is a test complaint. I don't like my Tutor, he sucks. Give me new one! I want my money BACK!!!! I got bad grade.... Bla bla..adfajdf;lajdfl;ajdfljal;kdjfal;sjdflajdfl;jasdl;kfjals;djf;alksdjfla;ksdjflkajsdl;fkjasld;jfal;ksdjfl;kajsdlf;kjasldk;fjalksdjflkajsdlfkjalksdjflak;sdjfl;ajsdfl;kajsdfl;kjasdlkfjalds;kjfal;sdjflajdfl;kajdslf;kjasdl;kfjal;sdjfl;ajsd;flakjdsfl;kajsd;lfkjasdl;kfjaldks;jfl;kasdjflasjf", "testStudentEmail@gmail.com", "testTutorEmail@gmail.com");
         assert id != null;
         databaseReference.child("Complaints").child(id).setValue(a);
-        
+
 
 
 
