@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                                             if(status == false){
                                                 Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(MainActivity.this, SignedIn.class);
-                                                intent.putExtra("role",role);
+                                                intent.putExtra("type",role);
+                                                intent.putExtra("emailAddress",userNameTemp);
                                                 startActivity(intent);
                                             } else {
                                                 if (snapshot.child(userNameTemp).child("suspension").hasChild("permanent") && snapshot.child(userNameTemp).child("suspension").child("permanent").getValue(boolean.class) == true){

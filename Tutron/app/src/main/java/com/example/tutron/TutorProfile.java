@@ -1,8 +1,10 @@
 package com.example.tutron;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -18,41 +20,49 @@ import com.google.firebase.database.ValueEventListener;
 
 public class TutorProfile extends AppCompatActivity {
 
-    private TextView nameTV, emailTV, educationLevelTV, nativeLanguageTV, descriptionTV;
+    private TextView name, email, educationLevel, nativeLanguage, description;
     private Button saveBtn;
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://seg-2105-group-project-f5fd7-default-rtdb.firebaseio.com/");
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_profile);
-        nameTV = findViewById(R.id.tutor_name);
-        emailTV = findViewById(R.id.tutor_email);
-        educationLevelTV = findViewById(R.id.tutor_education_level);
-        nativeLanguageTV = findViewById(R.id.tutor_native_language);
-        descriptionTV = findViewById(R.id.tutor_description);
+
+        //Get the username from SignedIn page.
+        Intent nameIntent = getIntent();
+        String emailAddress = nameIntent.getStringExtra("emailAddress");
+
+        name = findViewById(R.id.tutor_name);
+        email = findViewById(R.id.tutor_email);
+        educationLevel = findViewById(R.id.tutor_education_level);
+        nativeLanguage = findViewById(R.id.tutor_native_language);
+        description = findViewById(R.id.tutor_description);
         saveBtn = findViewById(R.id.save_button);
 
-        //Retrieve the email address of the currently logged in user
-        SharedPreferences sharedPref = getSharedPreferences("login_user_email", Context.MODE_PRIVATE);
-        String emailTemp = sharedPref.getString("userEmail", "");
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(emailTemp).addListenerForSingleValueEvent(new ValueEventListener() {
+
+       //Set each Text value.
+        databaseReference.child("Users").child(emailAddress).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                TutorAccount tutorAccount = dataSnapshot.getValue(TutorAccount.class);
-
-                nameTV.setText("Name: " + tutorAccount.getFirstName() + tutorAccount.getLastName());
-                emailTV.setText("Email: " + tutorAccount.getEmailAddress());
-                educationLevelTV.setText("Education Level: " + tutorAccount.getEducationLevel());
-                nativeLanguageTV.setText("Native Language: " + tutorAccount.getNativeLanguage());
-                descriptionTV.setText("Description: " + tutorAccount.getDescription());
+            //Get tutor information from database
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                name.setText("Name: " +snapshot.child("firstName").getValue(String.class) + " " + snapshot.child("lastName").getValue(String.class));
+                email.setText("Email: "+snapshot.child("emailAddress").getValue(String.class));
+                educationLevel.setText("Education Level: " +snapshot.child("educationLevel").getValue(String.class));
+                nativeLanguage.setText("Native Language: "+snapshot.child("nativeLanguage").getValue(String.class));
+                description.setText("Description: " + snapshot.child("description").getValue(String.class));
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(TutorProfile.this, "User information acquisition exception", Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
+
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

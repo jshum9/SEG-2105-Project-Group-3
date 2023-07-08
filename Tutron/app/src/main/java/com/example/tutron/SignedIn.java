@@ -24,21 +24,25 @@ public class SignedIn extends AppCompatActivity {
         logOffBtn = findViewById(R.id.logOffBtn);
         continueBtn = findViewById(R.id.continueBtn);
 
+        //Get the type and email address of tutor from MainActivity
         Intent intentRole = getIntent();
-        String role = intentRole.getStringExtra("role");
+        String role = intentRole.getStringExtra("type");
+        String emailAddress = intentRole.getStringExtra("emailAddress");
         roleTextview.setText(role);
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //If it's admin, go to admin page.
                 if(role.equals("Administrator")){
                     Intent adminIntent = new Intent(SignedIn.this, Administrator.class);
                     startActivity(adminIntent);
-                    finish();
                 }
-                if(role.equals("Tutor")){
+                //If it's tutor, go to tutor page.
+                if(role.equals("TUTOR")){
                     Intent tutorIntent = new Intent(SignedIn.this, TutorProfile.class);
-
+                    tutorIntent.putExtra("emailAddress",emailAddress);
+                    startActivity(tutorIntent);
                 }
             }
         });
