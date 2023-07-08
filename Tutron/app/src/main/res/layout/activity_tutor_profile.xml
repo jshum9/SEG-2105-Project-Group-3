@@ -1,20 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TutorProfile">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tutorName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/editProfileBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="EditProfile" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/tutor_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:text="Name: "/>
+
+        <TextView
+            android:id="@+id/tutor_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:text="Email: "/>
+
+        <TextView
+            android:id="@+id/tutor_education_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:text="Education Level: "/>
+
+        <TextView
+            android:id="@+id/tutor_native_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:text="Native Language: "/>
+
+        <TextView
+            android:id="@+id/tutor_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:text="Description: "/>
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>
