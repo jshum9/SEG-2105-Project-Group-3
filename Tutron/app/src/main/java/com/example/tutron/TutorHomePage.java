@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +27,6 @@ public class TutorHomePage extends AppCompatActivity {
 
     Button logOffBtn;
 
-    //TODO: what happens when we click on editProfileBtn
     Button editProfileBtn;
 
     Button addTopicBtn;
@@ -39,6 +39,8 @@ public class TutorHomePage extends AppCompatActivity {
     List<Topic> topics;
 
 
+    int numberOfTopicsVisibleToStudents = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,8 @@ public class TutorHomePage extends AppCompatActivity {
 
         Intent intentRole = getIntent();
         String emailAddress = intentRole.getStringExtra("emailAddress");
+
+
 
         logOffBtn = findViewById(R.id.logOffBtn);
         addTopicBtn = findViewById(R.id.addTopicBtn);
@@ -81,6 +85,7 @@ public class TutorHomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent addTopic = new Intent(TutorHomePage.this, TutorTopicManagement.class);
                 addTopic.putExtra("emailAddress", emailAddress);
+                addTopic.putExtra("numberOfTopicsVisibleToStudents", String.valueOf(numberOfTopicsVisibleToStudents));
                 startActivity(addTopic);
             }
         });
@@ -118,6 +123,7 @@ public class TutorHomePage extends AppCompatActivity {
         deleteTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                numberOfTopicsVisibleToStudents--;
                 databaseReference.child(topic.getName()).removeValue();
                 dialog.dismiss();
             }
@@ -133,6 +139,7 @@ public class TutorHomePage extends AppCompatActivity {
         hideTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                numberOfTopicsVisibleToStudents--;
                 databaseReference.child(topic.getName()).child("isOffered").setValue(false);
                 dialog.dismiss();
             }
@@ -146,9 +153,11 @@ public class TutorHomePage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 topics.clear();
+                numberOfTopicsVisibleToStudents = 0;
                 for (DataSnapshot postSnapshot: snapshot.getChildren()){
                     Topic topic = postSnapshot.getValue(Topic.class);
                     if (topic.getIsOffered()){
+                        numberOfTopicsVisibleToStudents++;
                         topics.add(topic);
                     }
                 }

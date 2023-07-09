@@ -22,6 +22,8 @@ public class TutorCreateTopic extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
 
+    int numberOfTopicsVisibleToStudents = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,13 @@ public class TutorCreateTopic extends AppCompatActivity {
 
         Intent intentRole = getIntent();
         String emailAddress = intentRole.getStringExtra("emailAddress");
+        String numberOfTopicsVisibleToStudentsStr = intentRole.getStringExtra("numberOfTopicsVisibleToStudents");
+
+
+        if (!numberOfTopicsVisibleToStudentsStr.isEmpty()){
+            numberOfTopicsVisibleToStudents = Integer.parseInt(numberOfTopicsVisibleToStudentsStr);
+        }
+
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users/" + emailAddress + "/Topics");
@@ -46,6 +55,7 @@ public class TutorCreateTopic extends AppCompatActivity {
             public void onClick(View v) {
                 Intent backIntent = new Intent(TutorCreateTopic.this, TutorTopicManagement.class);
                 backIntent.putExtra("emailAddress", emailAddress);
+                backIntent.putExtra("numberOfTopicsVisibleToStudents", String.valueOf(numberOfTopicsVisibleToStudents));
                 startActivity(backIntent);
                 finish();
             }
@@ -63,6 +73,7 @@ public class TutorCreateTopic extends AppCompatActivity {
                     databaseReference.child(topicName).setValue(c);
                     Intent backIntent = new Intent(TutorCreateTopic.this, TutorTopicManagement.class);
                     backIntent.putExtra("emailAddress", emailAddress);
+                    backIntent.putExtra("numberOfTopicsVisibleToStudents", String.valueOf(numberOfTopicsVisibleToStudents));
                     startActivity(backIntent);
                     finish();
                 } else{

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +36,9 @@ public class TutorTopicManagement extends AppCompatActivity {
     DatabaseReference databaseReference;
     List<Topic> topics;
 
+    int numberOfTopicsVisibleToStudents = 0;
+    int numberOfTopicsNotVisibleToStudents = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,13 @@ public class TutorTopicManagement extends AppCompatActivity {
 
         Intent intentRole = getIntent();
         String emailAddress = intentRole.getStringExtra("emailAddress");
+        String numberOfTopicsVisibleToStudentsStr = intentRole.getStringExtra("numberOfTopicsVisibleToStudents");
+        if (!numberOfTopicsVisibleToStudentsStr.isEmpty()){
+            numberOfTopicsVisibleToStudents = Integer.parseInt(numberOfTopicsVisibleToStudentsStr);
+        }
+
+
+
 
         backBtn = findViewById(R.id.backBtn);
         createTopicBtn = findViewById(R.id.addTopicBtn);
@@ -67,10 +78,18 @@ public class TutorTopicManagement extends AppCompatActivity {
         createTopicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent createTopic = new Intent(TutorTopicManagement.this, TutorCreateTopic.class);
-                createTopic.putExtra("emailAddress", emailAddress);
-                startActivity(createTopic);
-                finish();
+                if (numberOfTopicsVisibleToStudents + numberOfTopicsNotVisibleToStudents < 20){
+                    Intent createTopic = new Intent(TutorTopicManagement.this, TutorCreateTopic.class);
+                    createTopic.putExtra("emailAddress", emailAddress);
+                    createTopic.putExtra("numberOfTopicsVisibleToStudents", String.valueOf(numberOfTopicsVisibleToStudents));
+                    startActivity(createTopic);
+                    finish();
+                }
+
+                else{
+                    Toast.makeText(TutorTopicManagement.this, "You cannot have more then 20 total topics!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -106,6 +125,7 @@ public class TutorTopicManagement extends AppCompatActivity {
         removeTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                numberOfTopicsNotVisibleToStudents--;
                 databaseReference.child(topic.getName()).removeValue();
                 dialog.dismiss();
             }
@@ -121,8 +141,16 @@ public class TutorTopicManagement extends AppCompatActivity {
         addTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child(topic.getName()).child("isOffered").setValue(true);
-                dialog.dismiss();
+                if(numberOfTopicsVisibleToStudents < 5){
+                    numberOfTopicsVisibleToStudents++;
+                    databaseReference.child(topic.getName()).child("isOffered").setValue(true);
+                    dialog.dismiss();
+                }
+
+                else{
+                    Toast.makeText(TutorTopicManagement.this, "You cannot offer more then 5 courses at a time.", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
             }
         });
     }
@@ -134,9 +162,11 @@ public class TutorTopicManagement extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 topics.clear();
+                numberOfTopicsNotVisibleToStudents = 0;
                 for (DataSnapshot postSnapshot: snapshot.getChildren()){
                     Topic topic = postSnapshot.getValue(Topic.class);
                     if (!topic.getIsOffered()){
+                        numberOfTopicsNotVisibleToStudents++;
                         topics.add(topic);
                     }
 
