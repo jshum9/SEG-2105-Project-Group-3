@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,6 +49,7 @@ public class TutorHomePage extends AppCompatActivity {
 
         logOffBtn = findViewById(R.id.logOffBtn);
         addTopicBtn = findViewById(R.id.addTopicBtn);
+        editProfileBtn = findViewById(R.id.editProfileBtn);
 
         listViewTopics = findViewById(R.id.listViewTopics);
         topics = new ArrayList<>();
@@ -65,13 +67,21 @@ public class TutorHomePage extends AppCompatActivity {
             }
         });
 
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editIntent = new Intent(TutorHomePage.this, TutorProfile.class);
+                editIntent.putExtra("emailAddress",emailAddress);
+                startActivity(editIntent);
+            }
+        });
+
         addTopicBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent addTopic = new Intent(TutorHomePage.this, TutorTopicManagement.class);
                 addTopic.putExtra("emailAddress", emailAddress);
                 startActivity(addTopic);
-                finish();
             }
         });
 
@@ -150,7 +160,7 @@ public class TutorHomePage extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.d("FirebaseError", "Error fetching data: " + error.getMessage());
             }
         });
     }

@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,8 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class Tutor extends AppCompatActivity {
-    EditText tutorUserName, firstName, lastName, educationLevel, emailAddress, password, language, description;
-    Button backTutorBtn;
+    EditText  firstName, lastName, educationLevel, emailAddress, password, language, description;
+    ImageButton backTutorBtn;
     Button createTutorBtn;
     FirebaseDatabase database;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://seg-2105-group-project-f5fd7-default-rtdb.firebaseio.com/");

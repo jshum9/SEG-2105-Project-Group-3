@@ -8,16 +8,18 @@
     android:gravity="center_horizontal"
     tools:context=".Student">
 
-    <Button
+    <ImageButton
         android:id="@+id/studentBackButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back" />
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:background="@drawable/back_btn"
+        android:contentDescription="Back Button"
+        android:layout_gravity="left"/> />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Student Info"
+        android:text="Student Registration"
         android:textSize="32dp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"/>

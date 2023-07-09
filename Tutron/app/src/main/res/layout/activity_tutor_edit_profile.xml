@@ -9,15 +9,39 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageButton
+            android:id="@+id/back_Btn"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:background="@drawable/back_btn"
+            android:contentDescription="Back Button" />
+
         <TextView
-            android:id="@+id/tutor_name"
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:gravity="center_horizontal"
+            android:text="Profile" />
+
+        <EditText
+            android:id="@+id/tutor_first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:padding="10dp"
-            android:text="Name: "/>
+            android:text="First Name: "/>
 
-        <TextView
+
+        <EditText
+            android:id="@+id/tutor_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:text="Last Name: " />
+
+        <EditText
             android:id="@+id/tutor_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +49,7 @@
             android:padding="10dp"
             android:text="Email: "/>
 
-        <TextView
+        <EditText
             android:id="@+id/tutor_education_level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +57,7 @@
             android:padding="10dp"
             android:text="Education Level: "/>
 
-        <TextView
+        <EditText
             android:id="@+id/tutor_native_language"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +65,7 @@
             android:padding="10dp"
             android:text="Native Language: "/>
 
-        <TextView
+        <EditText
             android:id="@+id/tutor_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

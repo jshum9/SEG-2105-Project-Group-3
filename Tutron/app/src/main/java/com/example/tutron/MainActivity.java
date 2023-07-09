@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                                         if(snapshot.child(userNameTemp).hasChild("suspension")){
                                             boolean status = snapshot.child(userNameTemp).child("suspension").child("isSuspended").getValue(boolean.class);
                                             if(status == false){
-                                                Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(MainActivity. this, "Login successful!", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(MainActivity.this, SignedIn.class);
                                                 intent.putExtra("type",role);
                                                 intent.putExtra("emailAddress",userNameTemp);
