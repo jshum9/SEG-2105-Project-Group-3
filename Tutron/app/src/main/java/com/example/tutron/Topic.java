@@ -9,7 +9,7 @@ public class Topic {
 
     public Topic(){}
 
-    public Topic(String name, int yearsOfExperience, String description) {
+    public Topic(String name, int yearsOfExperience, String description,boolean isOffered) {
         this.name = name;
         this.yearsOfExperience = yearsOfExperience;
         this.description = description;
