@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 public class TutorProfile extends AppCompatActivity {
 
     private EditText firstName, lastName, email, educationLevel, nativeLanguage, description;
+
+    private TextView numberOfLessonsGiven;
     private Button saveBtn;
     private ImageButton backBtn;
 
@@ -36,6 +39,23 @@ public class TutorProfile extends AppCompatActivity {
         //Get the username from SignedIn page.
         Intent nameIntent = getIntent();
         String emailAddress = nameIntent.getStringExtra("emailAddress");
+
+        numberOfLessonsGiven = findViewById(R.id.numberOfLessonsGivenTextView);
+        databaseReference.child("Users").child(emailAddress).child("numberOfLessonsGiven").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int numberOfLessons = dataSnapshot.getValue(Integer.class);
+                    String numberOfLessonsString = String.valueOf(numberOfLessons);
+                    numberOfLessonsGiven.append(numberOfLessonsString);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors that occur
+            }
+        });
 
         firstName = findViewById(R.id.tutor_first_name);
         lastName = findViewById(R.id.tutor_last_name);

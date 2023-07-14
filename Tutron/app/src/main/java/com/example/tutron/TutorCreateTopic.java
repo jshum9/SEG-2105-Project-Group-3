@@ -64,7 +64,7 @@ public class TutorCreateTopic extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String topicName = topicNameEditText.getText().toString().trim();
+                String topicName = topicNameEditText.getText().toString().trim().toLowerCase();
                 String yearsOfExperienceStr = yearsOfExperienceEditText.getText().toString().trim();
                 String topicDescription = topicDescriptionEditText.getText().toString();
 

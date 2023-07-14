@@ -16,7 +16,7 @@ public class TopicList extends ArrayAdapter<Topic> {
     List<Topic> topics;
 
     public TopicList(Activity context, List<Topic> topics) {
-        super(context, R.layout.layout_topic, topics);
+        super(context, R.layout.layout_tutor_topic, topics);
         this.context = context;
         this.topics = topics;
     }
@@ -24,7 +24,7 @@ public class TopicList extends ArrayAdapter<Topic> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View listViewItem = inflater.inflate(R.layout.layout_topic, null, true);
+        View listViewItem = inflater.inflate(R.layout.layout_tutor_topic, null, true);
 
         TextView textViewTopicName = listViewItem.findViewById(R.id.textViewTopicName);
         TextView textViewYearsOfExperience = listViewItem.findViewById(R.id.textViewYearsOfExperience);

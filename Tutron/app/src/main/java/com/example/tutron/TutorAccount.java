@@ -9,16 +9,22 @@ public class TutorAccount extends User{
     private String  educationLevel, nativeLanguage,  description;
     private TutorSuspension suspension;
 
+    private int numberOfLessonsGiven;
+    private Double rating;
+
     public TutorAccount(){}
 
     public TutorAccount(String firstName, String lastName, String emailAddress, String password,
                         String educationLevel, String nativeLanguage, String description) {
         super(firstName, lastName, emailAddress, password);
         this.educationLevel = educationLevel;
-        this.nativeLanguage = nativeLanguage;
+        this.nativeLanguage = nativeLanguage.toLowerCase();
         this.description = description;
         this.suspension = new TutorSuspension(false, false, null);
+        this.numberOfLessonsGiven = 0;
+        this.rating = null;
     }
+
 
     public String getEducationLevel() {
         return educationLevel;
@@ -50,6 +56,22 @@ public class TutorAccount extends User{
 
     public void setSuspension(TutorSuspension suspension) {
         this.suspension = suspension;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public int getNumberOfLessonsGiven() {
+        return numberOfLessonsGiven;
+    }
+
+    public void setNumberOfLessonsGiven(int numberOfLessonsGiven) {
+        this.numberOfLessonsGiven = numberOfLessonsGiven;
     }
 
     public static String getTYPE() {

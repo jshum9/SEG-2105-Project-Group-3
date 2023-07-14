@@ -44,7 +44,9 @@ public class SignedIn extends AppCompatActivity {
                 }
 
                 else {
-                    Toast.makeText(SignedIn.this, "NOPE", Toast.LENGTH_SHORT).show();
+                    Intent studentIntent = new Intent(SignedIn.this, StudentHomePage.class);
+                    studentIntent.putExtra("emailAddress", emailAddress);
+                    startActivity(studentIntent);
                 }
 
             }

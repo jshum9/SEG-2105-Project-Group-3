@@ -6,8 +6,8 @@ public class User {
     public User(){}
 
     public User(String firstName, String lastName, String emailAddress, String password){
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = firstName.toLowerCase();
+        this.lastName = lastName.toLowerCase();
 
         //So that all email use a period and not a comma
         this.emailAddress = emailAddress.replace(',', '.');
