@@ -60,7 +60,7 @@ public class TutorProfile extends AppCompatActivity {
         firstName = findViewById(R.id.tutor_first_name);
         lastName = findViewById(R.id.tutor_last_name);
         email = findViewById(R.id.tutor_email);
-        educationLevel = findViewById(R.id.tutor_education_level);
+        educationLevel = findViewById(R.id.student_address);
         nativeLanguage = findViewById(R.id.tutor_native_language);
         description = findViewById(R.id.tutor_description);
         saveBtn = findViewById(R.id.save_button);

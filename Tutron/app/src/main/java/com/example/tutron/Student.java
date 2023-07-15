@@ -1,8 +1,5 @@
 package com.example.tutron;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,6 +61,7 @@ public class Student extends AppCompatActivity {
                 String lastNameTemp = lastName.getText().toString().trim();
                 //Replacing "." with "," since we are using the email as a key
                 String emailAddressTemp = emailAddress.getText().toString().trim().replace('.', ',');
+                String emailAddressTemp2 = emailAddress.getText().toString().trim();
                 String passwordTemp = password.getText().toString().trim();
                 String addressTemp = address.getText().toString().trim();
                 String cardNumberTemp = cardNumber.getText().toString().trim();
@@ -98,14 +99,14 @@ public class Student extends AppCompatActivity {
                                 //FLAG HERE FOR DELETED CODE
 
                                 //Current implementation of data into database
-                                databaseReference.child("Users").child(emailAddressTemp).child("first name").setValue(firstNameTemp);
-                                databaseReference.child("Users").child(emailAddressTemp).child("last name").setValue(lastNameTemp);
-                                databaseReference.child("Users").child(emailAddressTemp).child("email").setValue(emailAddressTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("firstName").setValue(firstNameTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("lastName").setValue(lastNameTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("emailAddress").setValue(emailAddressTemp2);
                                 databaseReference.child("Users").child(emailAddressTemp).child("password").setValue(passwordTemp);
                                 databaseReference.child("Users").child(emailAddressTemp).child("address").setValue(addressTemp);
-                                databaseReference.child("Users").child(emailAddressTemp).child("Credit Card Number").setValue(cardNumberTemp);
-                                databaseReference.child("Users").child(emailAddressTemp).child("Expiration Date").setValue(expirationDateTemp);
-                                databaseReference.child("Users").child(emailAddressTemp).child("cvv Number").setValue(cvvNumTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("Credit_Card_Number").setValue(cardNumberTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("Expiration_Date").setValue(expirationDateTemp);
+                                databaseReference.child("Users").child(emailAddressTemp).child("cvv_Number").setValue(cvvNumTemp);
                                 databaseReference.child("Users").child(emailAddressTemp).child("type").setValue("Student");
 
                                 //Possible new implementation of data into database

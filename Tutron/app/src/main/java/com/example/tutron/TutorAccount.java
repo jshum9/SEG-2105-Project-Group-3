@@ -1,6 +1,7 @@
 package com.example.tutron;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TutorAccount extends User{
 
@@ -14,6 +15,8 @@ public class TutorAccount extends User{
 
     public TutorAccount(){}
 
+    private List<Topic> topics;
+
     public TutorAccount(String firstName, String lastName, String emailAddress, String password,
                         String educationLevel, String nativeLanguage, String description) {
         super(firstName, lastName, emailAddress, password);
@@ -23,6 +26,7 @@ public class TutorAccount extends User{
         this.suspension = new TutorSuspension(false, false, null);
         this.numberOfLessonsGiven = 0;
         this.rating = null;
+        this.topics = new ArrayList<>();
     }
 
 
