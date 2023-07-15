@@ -20,12 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class StudentProfile extends AppCompatActivity {
-    private EditText firstName, lastName, email, address;
+    private EditText firstName, lastName, address;
 
     private Button saveBtn;
 
     private ImageButton backBtn;
-    private String username = "";
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://seg-2105-group-project-f5fd7-default-rtdb.firebaseio.com/");
 
@@ -40,7 +39,6 @@ public class StudentProfile extends AppCompatActivity {
 
         firstName = findViewById(R.id.student_first_name);
         lastName = findViewById(R.id.student_last_name);
-        email = findViewById(R.id.student_email);
         address = findViewById(R.id.student_address);
         saveBtn = findViewById(R.id.student_saveBtn);
         backBtn = findViewById(R.id.student_backBtn);
@@ -50,7 +48,6 @@ public class StudentProfile extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 firstName.setText(snapshot.child("firstName").getValue(String.class));
                 lastName.setText(snapshot.child("lastName").getValue(String.class));
-                email.setText(snapshot.child("emailAddress").getValue(String.class));
                 address.setText(snapshot.child("address").getValue(String.class));
             }
 
@@ -61,28 +58,27 @@ public class StudentProfile extends AppCompatActivity {
         });
 
 
+        //Back to student Home Page
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent backIntent = new Intent(StudentProfile.this, StudentHomePage.class);
-                backIntent.putExtra("emailAddress",username);
+                backIntent.putExtra("emailAddress",emailAddress);
                 startActivity(backIntent);
                 finish();
             }
         });
 
+        //Update student info
         saveBtn.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String firstNameTemp = firstName.getText().toString().trim();
                 String lastNameTemp = lastName.getText().toString().trim();
-                //Replacing "." with "," since we are using the email as a key
-                String emailAddressTemp = email.getText().toString().trim().replace('.', ',');
-                String emailAddressTemp2 = email.getText().toString().trim();
                 String addressTemp = address.getText().toString().trim();
                 Boolean dataSaved = false;
 
-                if (!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp) && (!TextUtils.isEmpty(emailAddressTemp))
+                if (!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp)
                         && !TextUtils.isEmpty(addressTemp)) {
                     dataSaved = true;
 
@@ -93,20 +89,9 @@ public class StudentProfile extends AppCompatActivity {
                     databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(emailAddressTemp)) {
-                                // If the new email id is the same as the old email id, then update the user info
-                                if (emailAddressTemp.equals(emailAddress)) {
-                                    updateUserInfo(emailAddressTemp, firstNameTemp, lastNameTemp, emailAddressTemp2, addressTemp);
-                                    Toast.makeText(StudentProfile.this, "Edit and save user information successfully!", Toast.LENGTH_SHORT).show();
-                                    username = emailAddressTemp;
-                                } else {
-                                    Toast.makeText(StudentProfile.this, "This email has already existed! Please try again", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                // If the new email id does not exist in the database, then copy the user data to the new email id and remove the old data
-                                cloneAndDeleteOldUser(emailAddressTemp, emailAddress, firstNameTemp, lastNameTemp, emailAddressTemp2, addressTemp);
-                                username = emailAddressTemp;
-                            }
+                            updateUserInfo(emailAddress, firstNameTemp, lastNameTemp, addressTemp);
+                            Toast.makeText(StudentProfile.this, "Edit and save user information successfully!", Toast.LENGTH_SHORT).show();
+
                         }
 
 
@@ -118,11 +103,12 @@ public class StudentProfile extends AppCompatActivity {
                     }
                 }
 
-            private void updateUserInfo(String email, String firstName, String lastName, String emailAddress,String address) {
+
+            //Update information of the user.
+            private void updateUserInfo(String email, String firstName, String lastName, String address) {
                 databaseReference.child("Users").child(email).child("firstName").setValue(firstName);
                 databaseReference.child("Users").child(email).child("lastName").setValue(lastName);
                 databaseReference.child("Users").child(email).child("address").setValue(address);
-                databaseReference.child("Users").child(email).child("emailAddress").setValue(emailAddress);
             }
 
             private void cloneAndDeleteOldUser(String newEmail, String oldEmail, String firstName, String lastName,String emailAddress,String address){
@@ -136,7 +122,7 @@ public class StudentProfile extends AppCompatActivity {
                                     System.out.println("Copy failed");
                                 }else{
                                     databaseReference.child("Users").child(oldEmail).removeValue();
-                                    updateUserInfo(newEmail,firstName,lastName,emailAddress,address);
+                                    updateUserInfo(newEmail,firstName,lastName,address);
                                     Toast.makeText(StudentProfile.this, "Edit and save user information successfully!", Toast.LENGTH_SHORT).show();
                                 }
                             }

@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class TutorProfile extends AppCompatActivity {
 
-    private EditText firstName, lastName, email, educationLevel, nativeLanguage, description;
+    private EditText firstName, lastName, educationLevel, nativeLanguage, description;
 
     private TextView numberOfLessonsGiven;
     private Button saveBtn;
@@ -59,7 +59,6 @@ public class TutorProfile extends AppCompatActivity {
 
         firstName = findViewById(R.id.tutor_first_name);
         lastName = findViewById(R.id.tutor_last_name);
-        email = findViewById(R.id.tutor_email);
         educationLevel = findViewById(R.id.student_address);
         nativeLanguage = findViewById(R.id.tutor_native_language);
         description = findViewById(R.id.tutor_description);
@@ -75,7 +74,6 @@ public class TutorProfile extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 firstName.setText(snapshot.child("firstName").getValue(String.class));
                 lastName.setText(snapshot.child("lastName").getValue(String.class));
-                email.setText(snapshot.child("emailAddress").getValue(String.class));
                 educationLevel.setText(snapshot.child("educationLevel").getValue(String.class));
                 nativeLanguage.setText(snapshot.child("nativeLanguage").getValue(String.class));
                 description.setText(snapshot.child("description").getValue(String.class));
@@ -92,7 +90,7 @@ public class TutorProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent backIntent = new Intent(TutorProfile.this, TutorHomePage.class);
-                backIntent.putExtra("emailAddress",username);
+                backIntent.putExtra("emailAddress",emailAddress);
                 startActivity(backIntent);
                 finish();
             }
@@ -107,15 +105,12 @@ public class TutorProfile extends AppCompatActivity {
                 String firstNameTemp = firstName.getText().toString().trim();
                 String lastNameTemp = lastName.getText().toString().trim();
                 String educationTemp = educationLevel.getText().toString().trim();
-                //Replacing "." with "," since we are using the email as a key
-                String emailTemp1 = email.getText().toString().trim();
-                String emailTemp2 = emailTemp1.replace(".", ",");
                 String languageTemp = nativeLanguage.getText().toString().trim();
                 String descriptionTemp = description.getText().toString();
                 Boolean dataSaved = false;
 
                 if (!TextUtils.isEmpty(firstNameTemp) && !TextUtils.isEmpty(lastNameTemp)
-                        && !TextUtils.isEmpty(educationTemp) && !TextUtils.isEmpty(emailTemp1)
+                        && !TextUtils.isEmpty(educationTemp)
                         && !TextUtils.isEmpty(languageTemp) && !TextUtils.isEmpty(descriptionTemp)) {
                     dataSaved = true;
                 } else {
@@ -130,20 +125,10 @@ public class TutorProfile extends AppCompatActivity {
                                 Toast.makeText(TutorProfile.this,"The description cannot be longer than 600 characters!",Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            if(snapshot.hasChild(emailTemp2)){
-                                // If the new email id is the same as the old email id, then update the user info
-                                if(emailTemp2.equals(emailAddress)){
-                                    updateUserInfo(emailTemp2, firstNameTemp, lastNameTemp, educationTemp, languageTemp, descriptionTemp);
-                                    Toast.makeText(TutorProfile.this, "Edit and save user information successfully!", Toast.LENGTH_SHORT).show();
-                                    username = emailTemp2;
-                                }else{
-                                    Toast.makeText(TutorProfile.this, "This email has already existed! Please try again", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                // If the new email id does not exist in the database, then copy the user data to the new email id and remove the old data
-                                cloneAndDeleteOldUser(emailTemp2, emailAddress, firstNameTemp, lastNameTemp, educationTemp, languageTemp, descriptionTemp);
-                                username = emailTemp2;
-                            }
+                            updateUserInfo(emailAddress, firstNameTemp, lastNameTemp, educationTemp, languageTemp, descriptionTemp);
+                            Toast.makeText(TutorProfile.this, "Edit and save user information successfully!", Toast.LENGTH_SHORT).show();
+
+
                         }
 
                         @Override
@@ -155,6 +140,8 @@ public class TutorProfile extends AppCompatActivity {
                 }
 
             }
+
+            //Update information of the user.
             private void updateUserInfo(String email, String firstName, String lastName, String education, String language, String description) {
                 databaseReference.child("Users").child(email).child("firstName").setValue(firstName);
                 databaseReference.child("Users").child(email).child("lastName").setValue(lastName);
@@ -163,6 +150,7 @@ public class TutorProfile extends AppCompatActivity {
                 databaseReference.child("Users").child(email).child("description").setValue(description);
             }
 
+            //Clone old user info to new and delete the old one
             private void cloneAndDeleteOldUser(String newEmail, String oldEmail, String firstName, String lastName, String education, String language, String description) {
                 databaseReference.child("Users").child(oldEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
