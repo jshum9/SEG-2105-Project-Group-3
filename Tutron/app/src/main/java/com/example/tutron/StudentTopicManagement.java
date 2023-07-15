@@ -2,6 +2,7 @@ package com.example.tutron;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import android.widget.EditText;
@@ -18,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +60,9 @@ public class StudentTopicManagement extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users");
 
+        onItemLongClick();
+
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +90,20 @@ public class StudentTopicManagement extends AppCompatActivity {
         });
     }
 
+    private void onItemLongClick() {
+        tutorSearchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TutorAccount tutor = tutors.get(position);
+                Intent intent = new Intent(StudentTopicManagement.this, StudentSelectTutor.class);
+                intent.putExtra("tutorEmailAddress", tutor.getEmailAddress().replace('.', ','));
+                startActivity(intent);
+            }
+        });
+    }
+
+
+
     private void searchTutors(String tutorName, String language, String topic) {
 
         Query query = databaseReference;
@@ -102,29 +119,29 @@ public class StudentTopicManagement extends AppCompatActivity {
 
                     if (!tutorName.isEmpty() && !language.isEmpty() && !topic.isEmpty()) {
                         for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
-                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), "", "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
+                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), tutorSnapshot.child("emailAddress").getValue(String.class), "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
                             if (tutor.getFirstName().equals(tutorName) && tutor.getNativeLanguage().equals(language) && tutorSnapshot.hasChild("Topics") && tutorSnapshot.child("Topics").hasChild(topic)) {
-                                if (tutorSnapshot.child("Topic").child(topic).child("isOffered").getValue(boolean.class) == true) {
+                                if (tutorSnapshot.child("Topics").child(topic).child("isOffered").getValue(boolean.class) == true) {
                                     tutors.add(tutor);
                                 }
                             }
                         }
 
-                        TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                        StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                         tutorSearchResults.setAdapter(adapter);
                     } else if (!tutorName.isEmpty() && !language.isEmpty() && topic.isEmpty()) {
                         for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
-                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), "", "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
+                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), tutorSnapshot.child("emailAddress").getValue(String.class), "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
                             if (tutor.getFirstName().equals(tutorName) && tutor.getNativeLanguage().equals(language)) {
                                 tutors.add(tutor);
                             }
                         }
 
-                        TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                        StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                         tutorSearchResults.setAdapter(adapter);
                     } else if (!tutorName.isEmpty() && language.isEmpty() && !topic.isEmpty()) {
                         for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
-                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), "", "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
+                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), tutorSnapshot.child("emailAddress").getValue(String.class), "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
                             if (tutor.getFirstName().equals(tutorName) && tutorSnapshot.hasChild("Topics") && tutorSnapshot.child("Topics").hasChild(topic)) {
                                 if (tutorSnapshot.child("Topics").child(topic).child("isOffered").getValue(boolean.class) == true) {
                                     tutors.add(tutor);
@@ -132,11 +149,11 @@ public class StudentTopicManagement extends AppCompatActivity {
                             }
                         }
 
-                        TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                        StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                         tutorSearchResults.setAdapter(adapter);
                     } else if (tutorName.isEmpty() && !language.isEmpty() && !topic.isEmpty()) {
                         for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
-                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), "", "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
+                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), tutorSnapshot.child("emailAddress").getValue(String.class), "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
                             if (tutor.getNativeLanguage().equals(language) && tutorSnapshot.hasChild("Topics") && tutorSnapshot.child("Topics").hasChild(topic)) {
                                 if (tutorSnapshot.child("Topics").child(topic).child("isOffered").getValue(boolean.class) == true) {
                                     tutors.add(tutor);
@@ -144,31 +161,31 @@ public class StudentTopicManagement extends AppCompatActivity {
                             }
                         }
 
-                        TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                        StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                         tutorSearchResults.setAdapter(adapter);
                     } else if (!tutorName.isEmpty() && language.isEmpty() && topic.isEmpty()) {
                         for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
-                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), "", "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
+                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), tutorSnapshot.child("emailAddress").getValue(String.class), "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
                             if (tutor.getFirstName().equals(tutorName)) {
                                 tutors.add(tutor);
                             }
                         }
 
-                        TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                        StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                         tutorSearchResults.setAdapter(adapter);
                     } else if (tutorName.isEmpty() && !language.isEmpty() && topic.isEmpty()) {
                         for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
-                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), "", "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
+                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), tutorSnapshot.child("emailAddress").getValue(String.class), "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
                             if (tutor.getNativeLanguage().equals(language)) {
                                 tutors.add(tutor);
                             }
                         }
 
-                        TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                        StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                         tutorSearchResults.setAdapter(adapter);
                     } else if (tutorName.isEmpty() && language.isEmpty() && !topic.isEmpty()) {
                         for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
-                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), "", "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
+                            TutorAccount tutor = new TutorAccount(tutorSnapshot.child("firstName").getValue(String.class), tutorSnapshot.child("lastName").getValue(String.class), tutorSnapshot.child("emailAddress").getValue(String.class), "", "", tutorSnapshot.child("nativeLanguage").getValue(String.class), "");
                             if (tutorSnapshot.hasChild("Topics") && tutorSnapshot.child("Topics").hasChild(topic)) {
                                 if (tutorSnapshot.child("Topics").child(topic).child("isOffered").getValue(boolean.class) == true) {
                                     tutors.add(tutor);
@@ -176,7 +193,7 @@ public class StudentTopicManagement extends AppCompatActivity {
                             }
                         }
 
-                        TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                        StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                         tutorSearchResults.setAdapter(adapter);
                     }
 
@@ -184,14 +201,14 @@ public class StudentTopicManagement extends AppCompatActivity {
                     if (tutors.isEmpty()) {
                         Toast.makeText(StudentTopicManagement.this, "We could not find a tutor who matches your search!", Toast.LENGTH_SHORT).show();
                         tutors.clear();
-                        TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                        StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                         tutorSearchResults.setAdapter(adapter);
                     }
 
                 } else {
                     Toast.makeText(StudentTopicManagement.this, "We could not find a tutor who matches your search!", Toast.LENGTH_SHORT).show();
                     tutors.clear();
-                    TutorAccountList adapter = new TutorAccountList(StudentTopicManagement.this, tutors);
+                    StudentShowTutorAccountListViewAdapter adapter = new StudentShowTutorAccountListViewAdapter(StudentTopicManagement.this, tutors);
                     tutorSearchResults.setAdapter(adapter);
                 }
 

@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".StudentSelectTutor">
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="John Doe"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/selfIntroductionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello, I'm a tutor with expertise in various subjects. I have several years of teaching experience and a passion for helping students succeed. Feel free to reach out to me for any assistance you may need."
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/topicsTaughtTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Topics Taught"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/topicsTaughtListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="16dp" />
+
+    </FrameLayout>
+
+</LinearLayout>

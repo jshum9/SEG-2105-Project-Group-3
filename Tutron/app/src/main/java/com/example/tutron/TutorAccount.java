@@ -13,6 +13,8 @@ public class TutorAccount extends User{
     private int numberOfLessonsGiven;
     private Double rating;
 
+    private float averageRating;
+
     public TutorAccount(){}
 
     private List<Topic> topics;
@@ -27,8 +29,16 @@ public class TutorAccount extends User{
         this.numberOfLessonsGiven = 0;
         this.rating = null;
         this.topics = new ArrayList<>();
+        this.averageRating = 0;
     }
 
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
+    }
 
     public String getEducationLevel() {
         return educationLevel;

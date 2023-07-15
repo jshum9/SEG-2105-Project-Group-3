@@ -1,0 +1,29 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Options"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/viewReviewsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Reviews" />
+
+    <Button
+        android:id="@+id/scheduleLessonButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Schedule a Lesson" />
+
+</LinearLayout>

@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class TutorAccountList extends ArrayAdapter<TutorAccount> {
+public class StudentShowTutorAccountListViewAdapter extends ArrayAdapter<TutorAccount> {
 
     private Activity context;
 
     List<TutorAccount> tutors;
 
-    public TutorAccountList(Activity context, List<TutorAccount> tutors) {
+    public StudentShowTutorAccountListViewAdapter(Activity context, List<TutorAccount> tutors) {
         super(context, R.layout.layout_student_search_tutor_result, tutors);
         this.context = context;
         this.tutors = tutors;
@@ -29,17 +29,17 @@ public class TutorAccountList extends ArrayAdapter<TutorAccount> {
 
         TextView textViewTutorName = listViewItem.findViewById(R.id.textViewTutorName);
         TextView textViewNativeLanguage = listViewItem.findViewById(R.id.textViewNativeLanguage);
-        //TODO hourly rate
+        //TODO: hourly rate
         TextView textViewHourlyRate = listViewItem.findViewById(R.id.textViewHourlyRate);
-        //TODO numberOfLessonsGiven
         TextView numberOfLessonsGiven = listViewItem.findViewById(R.id.numberOfLessonsGiven);
-        //TODO ratingBar
+
         RatingBar ratingBar = listViewItem.findViewById(R.id.ratingBar);
 
         TutorAccount tutor = tutors.get(position);
         textViewTutorName.setText(tutor.getFirstName());
         textViewNativeLanguage.append(tutor.getNativeLanguage());
         numberOfLessonsGiven.append(Integer.toString(tutor.getNumberOfLessonsGiven()));
+        ratingBar.setRating(tutor.getAverageRating());
 
         return listViewItem;
     }

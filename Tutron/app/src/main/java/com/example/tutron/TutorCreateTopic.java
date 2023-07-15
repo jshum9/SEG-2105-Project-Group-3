@@ -69,7 +69,7 @@ public class TutorCreateTopic extends AppCompatActivity {
                 String topicDescription = topicDescriptionEditText.getText().toString();
 
                 if (!topicName.isEmpty() && !topicDescription.isEmpty() && !yearsOfExperienceStr.isEmpty()){
-                    Topic c = new Topic(topicName, Integer.parseInt(yearsOfExperienceStr), topicDescription,false);
+                    Topic c = new Topic(topicName, Integer.parseInt(yearsOfExperienceStr), topicDescription);
                     databaseReference.child(topicName).setValue(c);
                     Intent backIntent = new Intent(TutorCreateTopic.this, TutorTopicManagement.class);
                     backIntent.putExtra("emailAddress", emailAddress);

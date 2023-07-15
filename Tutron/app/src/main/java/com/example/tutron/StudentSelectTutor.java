@@ -1,0 +1,161 @@
+package com.example.tutron;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentSelectTutor extends AppCompatActivity {
+
+    private TextView nameTextView;
+    private TextView selfIntroductionTextView;
+    private TextView topicsTaughtTitleTextView;
+    private ListView topicsTaughtListView;
+
+    private FirebaseDatabase database;
+    private DatabaseReference tutorReference;
+
+    private ArrayList<Topic> topics;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_student_select_tutor);
+
+        // Initialize the views
+        nameTextView = findViewById(R.id.nameTextView);
+        selfIntroductionTextView = findViewById(R.id.selfIntroductionTextView);
+        topicsTaughtListView = findViewById(R.id.topicsTaughtListView);
+        topics = new ArrayList<>();
+
+
+        Intent intentRole = getIntent();
+        String tutorEmailAddress = intentRole.getStringExtra("tutorEmailAddress");
+
+        database = FirebaseDatabase.getInstance();
+        tutorReference = database.getReference("Users/" + tutorEmailAddress);
+
+        Button backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudentSelectTutor.this, StudentTopicManagement.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        tutorReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String firstName = dataSnapshot.child("firstName").getValue(String.class);
+                String lastName = dataSnapshot.child("lastName").getValue(String.class);
+                String description = dataSnapshot.child("description").getValue(String.class);
+
+                nameTextView.setText(Character.toUpperCase(firstName.charAt(0)) + firstName.substring(1)  + " " + Character.toUpperCase(lastName.charAt(0)) + lastName.substring(1));
+                selfIntroductionTextView.setText(description);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle any errors
+                // ...
+            }
+        });
+
+        tutorReference.child("Topics").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                topics.clear();
+                for (DataSnapshot postSnapshot: snapshot.getChildren()){
+                    Topic topic = postSnapshot.getValue(Topic.class);
+                    if (topic.getIsOffered()){
+                        topics.add(topic);
+                    }
+
+                }
+
+                StudentSelectTutorTopicListViewAdapter adapter = new StudentSelectTutorTopicListViewAdapter(StudentSelectTutor.this, topics);
+                topicsTaughtListView.setAdapter(adapter);
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        onItemLongClick();
+
+
+
+
+    }
+
+    private void onItemLongClick() {
+        topicsTaughtListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Topic topic = topics.get(position);
+                showRemoveStagedTopicDialog(topic);
+            }
+        });
+    }
+
+    private void showRemoveStagedTopicDialog(Topic topic){
+        android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.layout_student_long_click_topic_to_schedule, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button viewReviewsButton = (Button) dialogView.findViewById(R.id.viewReviewsButton);
+        final Button scheduleALesson = (Button) dialogView.findViewById(R.id.scheduleLessonButton);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+        dialog.show();
+
+
+        //TODO: What happens when Student wants to view review for this topic?
+        viewReviewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(StudentSelectTutor.this, "Not implemented yet!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //TODO: What happens when Student wants to schedule a lesson?
+        scheduleALesson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(StudentSelectTutor.this, "Not implemented yet!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+}

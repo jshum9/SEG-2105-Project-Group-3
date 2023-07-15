@@ -7,13 +7,24 @@ public class Topic {
 
     private boolean isOffered;
 
+    private float rating;
+
     public Topic(){}
 
-    public Topic(String name, int yearsOfExperience, String description,boolean isOffered) {
+    public Topic(String name, int yearsOfExperience, String description) {
         this.name = name;
         this.yearsOfExperience = yearsOfExperience;
         this.description = description;
         this.isOffered = false;
+        this.rating = 0;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public float getRating() {
+        return rating;
     }
 
     public void setDescription(String description) {
