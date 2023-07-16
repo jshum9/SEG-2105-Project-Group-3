@@ -15,15 +15,15 @@
         android:layout_marginBottom="16dp" />
 
     <Button
-        android:id="@+id/viewReviewsButton"
+        android:id="@+id/complainBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Reviews" />
+        android:text="Make a complaint against your tutor" />
 
     <Button
-        android:id="@+id/scheduleLessonButton"
+        android:id="@+id/reviewBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Schedule a Lesson" />
+        android:text="Make a review" />
 
 </LinearLayout>

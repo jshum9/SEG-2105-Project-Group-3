@@ -172,7 +172,7 @@ public class TutorTopicManagement extends AppCompatActivity {
 
                 }
 
-                TopicList adapter = new TopicList(TutorTopicManagement.this, topics);
+                TutorTopicListView adapter = new TutorTopicListView(TutorTopicManagement.this, topics);
                 listViewTopics.setAdapter(adapter);
 
             }

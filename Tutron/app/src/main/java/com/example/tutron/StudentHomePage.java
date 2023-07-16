@@ -1,12 +1,15 @@
 package com.example.tutron;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -30,12 +34,15 @@ public class StudentHomePage extends AppCompatActivity {
 
     Button editReviewsBtn;
 
-    List<Topic> topics;
-    ListView listViewTopics;
-    int numberOfTopicsVisibleToStudents = 0;
+    List<Topic> ownedTopics;
+    ListView listViewOwnedTopics;
+
 
     FirebaseDatabase database;
     DatabaseReference databaseReference;
+    DatabaseReference ownedTopicsDatabaseReference;
+    DatabaseReference reviewsRef;
+
 
 
     @Override
@@ -46,14 +53,15 @@ public class StudentHomePage extends AppCompatActivity {
         Intent intentRole = getIntent();
         String emailAddress = intentRole.getStringExtra("emailAddress");
 
-        topics = new ArrayList<>();
-        listViewTopics = findViewById(R.id.listViewLearningTopics);
+        ownedTopics = new ArrayList<>();
+        listViewOwnedTopics = findViewById(R.id.listViewLearningTopics);
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Users");
+        databaseReference = database.getReference("Users/" + emailAddress);
+        ownedTopicsDatabaseReference = databaseReference.child("OwnedTopics");
+        reviewsRef = database.getInstance().getReference().child("Reviews");
 
-        //TODO firebase implementation
-//        database = FirebaseDatabase.getInstance();
-//        databaseReference = database.getReference("Users/" + emailAddress + "/Topics");
+
+
 
         logOffBtn = findViewById(R.id.logOffBtn);
         addTopicBtn = findViewById(R.id.addTopicBtn);
@@ -61,7 +69,7 @@ public class StudentHomePage extends AppCompatActivity {
         //TODO editReviewBtn
         editReviewsBtn = findViewById(R.id.editReviewsBtn);
 
-        onItemClick();
+        listViewOwnedTopicsOnItemClick(emailAddress);
 
         logOffBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,40 +105,98 @@ public class StudentHomePage extends AppCompatActivity {
 
     }
 
-    private void onItemClick(){
-        listViewTopics.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+    private void listViewOwnedTopicsOnItemClick(String studentEmail){
+        listViewOwnedTopics.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Topic topic = topics.get(position);
+                Topic ownedTopic = ownedTopics.get(position);
+
+                showReviewOrComplainDialog(ownedTopic, studentEmail);
             }
         });
+    }
+
+    private void showReviewOrComplainDialog(Topic topic, String studentEmail){
+        android.app.AlertDialog.Builder dialogBuilder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.layout_student_complain_or_review, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button complainBtn = (Button) dialogView.findViewById(R.id.complainBtn);
+        final Button reviewBtn = (Button) dialogView.findViewById(R.id.reviewBtn);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+        dialog.show();
+
+        complainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent makeComplaint = new Intent(StudentHomePage.this, StudentMakeComplaint.class);
+                makeComplaint.putExtra("studentEmailAddress", studentEmail);
+                makeComplaint.putExtra("tutorEmailAddress", topic.getTutorEmail());
+                startActivity(makeComplaint);
+            }
+        });
+
+        //TODO: What happens when Student wants to make a review?
+        reviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                reviewsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        boolean flag = false;
+                        for (DataSnapshot reviewSnapshot : snapshot.getChildren()){
+                            if (reviewSnapshot.child("studentEmail").getValue(String.class).equals(studentEmail) && reviewSnapshot.child("tutorEmail").getValue(String.class).equals(topic.getTutorEmail().replace('.', ',')) && reviewSnapshot.child("tutorTopic").getValue(String.class).equals(topic.getDescription())){
+                                flag = true;
+
+
+                            }
+                        }
+
+                        if (flag == true){
+                            Toast.makeText(StudentHomePage.this, "You've already written a review! Click on \"Edit Reviews\" if you would like to edit it.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        else{
+                            Intent makeReview = new Intent(StudentHomePage.this, StudentMakeReview.class);
+                            makeReview.putExtra("studentEmailAddress", studentEmail);
+                            makeReview.putExtra("tutorEmailAddress", topic.getTutorEmail());
+                            makeReview.putExtra("topicName", topic.getDescription());
+                            startActivity(makeReview);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
+            }
+        });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        ownedTopicsDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                topics.clear();
-                numberOfTopicsVisibleToStudents = 0;
-                for(DataSnapshot userSnapshot: snapshot.getChildren()){
-                    String userType = userSnapshot.child("type").getValue(String.class);
-                    if("TUTOR".equals(userType)){
-                        for(DataSnapshot topicSnapshot: userSnapshot.child("Topics").getChildren()){
-                            Topic topic = topicSnapshot.getValue(Topic.class);
-                            if(topic.getIsOffered()){
-                                numberOfTopicsVisibleToStudents++;
-                                topics.add(topic);
-                        }
-                    }
-
-                    }
+                ownedTopics.clear();
+                for(DataSnapshot topicSnapshot: snapshot.getChildren()){
+                    Topic ownedTopic = topicSnapshot.getValue(Topic.class);
+                    ownedTopics.add(ownedTopic);
                 }
 
-                TopicList adapter = new TopicList(StudentHomePage.this,topics);
-                listViewTopics.setAdapter(adapter);
+                StudentOwnedTopicListView adapter = new StudentOwnedTopicListView(StudentHomePage.this, ownedTopics);
+                listViewOwnedTopics.setAdapter(adapter);
             }
 
             @Override
@@ -139,4 +205,7 @@ public class StudentHomePage extends AppCompatActivity {
             }
         });
     }
+
+
+
 }

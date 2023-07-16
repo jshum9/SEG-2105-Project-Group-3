@@ -50,6 +50,7 @@ public class StudentSelectTutor extends AppCompatActivity {
 
         Intent intentRole = getIntent();
         String tutorEmailAddress = intentRole.getStringExtra("tutorEmailAddress");
+        String studentEmailAddress = intentRole.getStringExtra("studentEmailAddress");
 
         database = FirebaseDatabase.getInstance();
         tutorReference = database.getReference("Users/" + tutorEmailAddress);
@@ -59,6 +60,7 @@ public class StudentSelectTutor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentSelectTutor.this, StudentTopicManagement.class);
+                intent.putExtra("emailAddress", studentEmailAddress);
                 startActivity(intent);
                 finish();
             }
@@ -118,6 +120,7 @@ public class StudentSelectTutor extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Topic topic = topics.get(position);
+
                 showRemoveStagedTopicDialog(topic);
             }
         });

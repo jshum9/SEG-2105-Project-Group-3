@@ -60,7 +60,7 @@ public class StudentTopicManagement extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users");
 
-        onItemLongClick();
+        onItemLongClick(emailAddress);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,13 +90,14 @@ public class StudentTopicManagement extends AppCompatActivity {
         });
     }
 
-    private void onItemLongClick() {
+    private void onItemLongClick(String emailAddress) {
         tutorSearchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TutorAccount tutor = tutors.get(position);
                 Intent intent = new Intent(StudentTopicManagement.this, StudentSelectTutor.class);
                 intent.putExtra("tutorEmailAddress", tutor.getEmailAddress().replace('.', ','));
+                intent.putExtra("studentEmailAddress", emailAddress);
                 startActivity(intent);
             }
         });

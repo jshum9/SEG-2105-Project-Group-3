@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class TopicList extends ArrayAdapter<Topic> {
+public class TutorTopicListView extends ArrayAdapter<Topic> {
 
     private Activity context;
 
     List<Topic> topics;
 
-    public TopicList(Activity context, List<Topic> topics) {
+    public TutorTopicListView(Activity context, List<Topic> topics) {
         super(context, R.layout.layout_tutor_topic, topics);
         this.context = context;
         this.topics = topics;

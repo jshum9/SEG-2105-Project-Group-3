@@ -32,6 +32,17 @@ public class Tutor extends AppCompatActivity {
 //        Complaint a = new Complaint(id, "This is a test complaint. I don't like my Tutor, he sucks. Give me new one! I want my money BACK!!!! I got bad grade.... Bla bla..adfajdf;lajdfl;ajdfljal;kdjfal;sjdflajdfl;jasdl;kfjals;djf;alksdjfla;ksdjflkajsdl;fkjasld;jfal;ksdjfl;kajsdlf;kjasldk;fjalksdjflkajsdlfkjalksdjflak;sdjfl;ajsdfl;kajsdfl;kjasdlkfjalds;kjfal;sdjflajdfl;kajdslf;kjasdl;kfjal;sdjfl;ajsd;flakjdsfl;kajsd;lfkjasdl;kfjaldks;jfl;kasdjflasjf", "testStudentEmail@gmail.com", "testTutorEmail@gmail.com");
 //        assert id != null;
 //        databaseReference.child("Complaints").child(id).setValue(a);
+        //generate a test Review
+//        String id = databaseReference.push().getKey();
+//        Review b = new Review(id, "This tutor is ok, not the best but just ok...", "testStudentEmail@gmail.com", "testTutorEmail@gmail.com", "french", 2.5);
+//        assert id != null;
+//        databaseReference.child("Reviews").child(id).setValue(b);
+        //generate a test ownedTopic for student
+        String tutorName = "Shawhin";
+        String topic = "french";
+        String tutorEmailAddress = "testTutorEmail@gmail.com";
+        Topic p = new Topic(tutorName, topic, tutorEmailAddress);
+        databaseReference.child("Users/testStudentEmail@gmail,com/OwnedTopics").child(topic).setValue(p);
 
 
 

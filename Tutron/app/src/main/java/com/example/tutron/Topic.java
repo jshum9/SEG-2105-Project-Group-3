@@ -9,14 +9,32 @@ public class Topic {
 
     private float rating;
 
+    private String tutorEmail;
+
     public Topic(){}
 
+    //When a tutor creates a topic
     public Topic(String name, int yearsOfExperience, String description) {
         this.name = name;
         this.yearsOfExperience = yearsOfExperience;
         this.description = description;
         this.isOffered = false;
         this.rating = 0;
+    }
+
+    //When a student ownes a topic
+    public Topic(String name, String description, String tutorEmail){
+        this.name = name;
+        this.description = description;
+        this.tutorEmail = tutorEmail;
+    }
+
+    public void setTutorEmail(String tutorEmail) {
+        this.tutorEmail = tutorEmail;
+    }
+
+    public String getTutorEmail() {
+        return tutorEmail;
     }
 
     public void setRating(float rating) {
