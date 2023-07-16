@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                                         Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(MainActivity.this, SignedIn.class);
                                                         intent.putExtra("type",role);
+                                                        intent.putExtra("emailAddress",userNameTemp);
                                                         startActivity(intent);
                                                     }
 

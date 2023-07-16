@@ -98,7 +98,15 @@ public class StudentHomePage extends AppCompatActivity {
             }
         });
 
-
+        editReviewsBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+//                Intent addTopic = new Intent(StudentHomePage.this, StudentTopicManagement.class);
+//                addTopic.putExtra("emailAddress", emailAddress);
+//                startActivity(addTopic);
+                Toast.makeText(StudentHomePage.this, "Not implemented yet!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
