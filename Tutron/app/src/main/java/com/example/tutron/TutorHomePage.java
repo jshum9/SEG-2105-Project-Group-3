@@ -1,8 +1,5 @@
 package com.example.tutron;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +29,8 @@ public class TutorHomePage extends AppCompatActivity {
     Button editProfileBtn;
 
     Button addTopicBtn;
+
+    Button viewPurchaseBtn;
     ListView listViewTopics;
 
 
@@ -53,6 +55,7 @@ public class TutorHomePage extends AppCompatActivity {
         logOffBtn = findViewById(R.id.logOffBtn);
         addTopicBtn = findViewById(R.id.addTopicBtn);
         editProfileBtn = findViewById(R.id.editProfileBtn);
+        viewPurchaseBtn = findViewById(R.id.purchaseBtn);
 
         listViewTopics = findViewById(R.id.listViewTopics);
         topics = new ArrayList<>();
@@ -86,6 +89,15 @@ public class TutorHomePage extends AppCompatActivity {
                 addTopic.putExtra("emailAddress", emailAddress);
                 addTopic.putExtra("numberOfTopicsVisibleToStudents", String.valueOf(numberOfTopicsVisibleToStudents));
                 startActivity(addTopic);
+            }
+        });
+
+        viewPurchaseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewPurchaseIntent = new Intent(TutorHomePage.this,TutorTopicsPurchased.class);
+                viewPurchaseIntent.putExtra("emailAddress",emailAddress);
+                startActivity(viewPurchaseIntent);
             }
         });
 

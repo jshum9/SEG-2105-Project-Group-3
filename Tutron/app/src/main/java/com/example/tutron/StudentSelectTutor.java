@@ -29,8 +29,11 @@ public class StudentSelectTutor extends AppCompatActivity {
     private TextView topicsTaughtTitleTextView;
     private ListView topicsTaughtListView;
 
+    private String tutorEmailAddress,studentEmailAddress;
+
     private FirebaseDatabase database;
     private DatabaseReference tutorReference;
+    private DatabaseReference databaseReference;
 
     private ArrayList<Topic> topics;
 
@@ -49,11 +52,12 @@ public class StudentSelectTutor extends AppCompatActivity {
 
 
         Intent intentRole = getIntent();
-        String tutorEmailAddress = intentRole.getStringExtra("tutorEmailAddress");
-        String studentEmailAddress = intentRole.getStringExtra("studentEmailAddress");
+        tutorEmailAddress = intentRole.getStringExtra("tutorEmailAddress");
+        studentEmailAddress = intentRole.getStringExtra("studentEmailAddress");
 
         database = FirebaseDatabase.getInstance();
         tutorReference = database.getReference("Users/" + tutorEmailAddress);
+        databaseReference = database.getReference("PurchaseRequests");
 
         Button backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -140,20 +144,29 @@ public class StudentSelectTutor extends AppCompatActivity {
         dialog.show();
 
 
-        //TODO: What happens when Student wants to view review for this topic?
+
         viewReviewsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(StudentSelectTutor.this, "Not implemented yet!", Toast.LENGTH_SHORT).show();
+                Intent viewReviewIntent = new Intent(StudentSelectTutor.this, Student_read_review.class);
+                viewReviewIntent.putExtra("tutorEmailAddress", tutorEmailAddress);
+                viewReviewIntent.putExtra("topicName", topic.getName());
+                viewReviewIntent.putExtra("studentEmailAddress",studentEmailAddress);
+                startActivity(viewReviewIntent);
+                finish();
             }
         });
 
-        //TODO: What happens when Student wants to schedule a lesson?
+
         scheduleALesson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(StudentSelectTutor.this, "Not implemented yet!", Toast.LENGTH_SHORT).show();
+                String id = databaseReference.push().getKey();
+                PurchaseRequest purchaseRequest = new PurchaseRequest(id,studentEmailAddress,tutorEmailAddress,topic.getName(),System.currentTimeMillis(),"Pending");
+                assert id != null;
+                databaseReference.child(id).setValue(purchaseRequest);
+                Toast.makeText(StudentSelectTutor.this, "Purchase the lesson successfully!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
 

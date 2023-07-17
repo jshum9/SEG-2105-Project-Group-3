@@ -18,7 +18,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -35,13 +34,21 @@ public class StudentHomePage extends AppCompatActivity {
     Button editReviewsBtn;
 
     List<Topic> ownedTopics;
+
+    List<PurchaseRequest> purchaseRequests;
     ListView listViewOwnedTopics;
+
+    ListView listViewPurchaseRequest;
 
 
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     DatabaseReference ownedTopicsDatabaseReference;
     DatabaseReference reviewsRef;
+
+    private String emailAddress;
+
+    DatabaseReference purchaseRequestRef;
 
 
 
@@ -51,14 +58,18 @@ public class StudentHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_student_home_page);
 
         Intent intentRole = getIntent();
-        String emailAddress = intentRole.getStringExtra("emailAddress");
+        emailAddress = intentRole.getStringExtra("emailAddress");
 
         ownedTopics = new ArrayList<>();
+        purchaseRequests = new ArrayList<>();
         listViewOwnedTopics = findViewById(R.id.listViewLearningTopics);
+        listViewPurchaseRequest = findViewById(R.id.listViewPurchaseRequests);
+
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users/" + emailAddress);
         ownedTopicsDatabaseReference = databaseReference.child("OwnedTopics");
-        reviewsRef = database.getInstance().getReference().child("Reviews");
+        reviewsRef = database.getReference().child("Reviews");
+        purchaseRequestRef = database.getReference("PurchaseRequest");
 
 
 
@@ -98,15 +109,7 @@ public class StudentHomePage extends AppCompatActivity {
             }
         });
 
-        editReviewsBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-//                Intent addTopic = new Intent(StudentHomePage.this, StudentTopicManagement.class);
-//                addTopic.putExtra("emailAddress", emailAddress);
-//                startActivity(addTopic);
-                Toast.makeText(StudentHomePage.this, "Not implemented yet!", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
 
 
@@ -173,6 +176,7 @@ public class StudentHomePage extends AppCompatActivity {
                             makeReview.putExtra("studentEmailAddress", studentEmail);
                             makeReview.putExtra("tutorEmailAddress", topic.getTutorEmail());
                             makeReview.putExtra("topicName", topic.getDescription());
+                            makeReview.putExtra("reviewDate",System.currentTimeMillis());
                             startActivity(makeReview);
                         }
                     }
@@ -210,8 +214,35 @@ public class StudentHomePage extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("FirebaseError", "Error fetching data: " + error.getMessage());
+                Toast.makeText(StudentHomePage.this, "Error fetching data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        purchaseRequestRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                purchaseRequests.clear();
+                for(DataSnapshot requestSnapshot: snapshot.getChildren()){
+                    PurchaseRequest request = requestSnapshot.getValue(PurchaseRequest.class);
+                    if(request.getStudentEmail().equals(emailAddress)){
+                        purchaseRequests.add(request);
+                    }
+
+                }
+                PurchaseRequestList adapter = new PurchaseRequestList(StudentHomePage.this,purchaseRequests);
+                listViewPurchaseRequest.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("FirebaseError", "Error fetching data: " + error.getMessage());
+                Toast.makeText(StudentHomePage.this, "Error fetching data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
     }
 
 

@@ -51,12 +51,25 @@
             android:dividerHeight="4dp"
             />
 
-        <Button
-            android:id="@+id/addTopicBtn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Topic"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/addTopicBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Topic" />
+
+            <Button
+                android:id="@+id/purchaseBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Purchase Topic" />
+
+        </LinearLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-  </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>
