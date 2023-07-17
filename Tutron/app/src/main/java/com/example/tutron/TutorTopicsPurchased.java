@@ -71,7 +71,7 @@ public class TutorTopicsPurchased extends AppCompatActivity {
                 purchaseRequests1.clear();
                 for(DataSnapshot requestSnapshot: snapshot.getChildren()){
                     PurchaseRequest request = requestSnapshot.getValue(PurchaseRequest.class);
-                    if(request.getTutorEmail().replace(",",".").equals(tutorEmailAddress)){
+                    if(request.getTutorEmail().equals(tutorEmailAddress)){
                         purchaseRequests1.add(request);
                     }
 
