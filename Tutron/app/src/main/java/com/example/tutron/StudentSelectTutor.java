@@ -57,7 +57,7 @@ public class StudentSelectTutor extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         tutorReference = database.getReference("Users/" + tutorEmailAddress);
-        databaseReference = database.getReference("PurchaseRequests");
+        databaseReference = database.getReference("PurchaseRequest");
 
         Button backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {

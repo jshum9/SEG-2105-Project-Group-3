@@ -1,19 +1,25 @@
 package com.example.tutron;
 
+import androidx.annotation.NonNull;
+
+import java.util.Date;
+
 public class Review {
 
     private String id, review, studentEmail, tutorEmail, tutorTopic;
-    private Date startDate;
-    private Date cannotEditDate;
+    private Date reviewDate;
     private double numberOfStars;
 
-    public Review(String id, String review, String studentEmail, String tutorEmail, String tutorTopic, double numberOfStars){
+    public Review(){}
+
+    public Review(String id, String review, String studentEmail, String tutorEmail, String tutorTopic, double numberOfStars, Date reviewDate){
         this.id = id;
         this.review = review;
         this.studentEmail = studentEmail;
         this.tutorEmail = tutorEmail;
         this.tutorTopic = tutorTopic;
         this.numberOfStars = numberOfStars;
+        this.reviewDate = reviewDate;
     }
 
     public String getId() {
@@ -62,5 +68,19 @@ public class Review {
 
     public void setNumberOfStars(double numberOfStars) {
         this.numberOfStars = numberOfStars;
+    }
+
+    public void setReviewDate(Date reviewDate) {
+        this.reviewDate = reviewDate;
+    }
+
+    public Date getReviewDate() {
+        return reviewDate;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return review;
     }
 }

@@ -1,7 +1,5 @@
 package com.example.tutron;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +8,12 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Date;
 
 public class StudentMakeReview extends AppCompatActivity {
 
@@ -29,6 +31,8 @@ public class StudentMakeReview extends AppCompatActivity {
         String studentEmailAddress = intentRole.getStringExtra("studentEmailAddress");
         String tutorEmailAddress = intentRole.getStringExtra("tutorEmailAddress");
         String topicName = intentRole.getStringExtra("topicName");
+        Long reviewDate = intentRole.getLongExtra("reviewDate",-1);
+        java.util.Date resultDate = new Date(reviewDate);
 
         RatingBar ratingBar = findViewById(R.id.ratingBar);
         EditText editTextReview = findViewById(R.id.editTextReview);
@@ -53,7 +57,7 @@ public class StudentMakeReview extends AppCompatActivity {
 
                 else{
                     String id = databaseReference.push().getKey();
-                    Review b = new Review(id, review, studentEmailAddress, tutorEmailAddress.replace('.', ','), topicName, ratingBar.getRating());
+                    Review b = new Review(id, review, studentEmailAddress, tutorEmailAddress.replace('.', ','), topicName, ratingBar.getRating(),resultDate);
                     assert id != null;
                     databaseReference.child(id).setValue(b);
 
